@@ -1,0 +1,297 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useMembers } from "@/hooks/useMembers";
+import AppLayout from "@/components/AppLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, Shield, Trash2, UserCog } from "lucide-react";
+import { toast } from "sonner";
+
+export default function Members() {
+  const { token } = useParams<{ token: string }>();
+  const { members, loading, addMember, deleteMember, transferAdmin, adminMember } =
+    useMembers();
+
+  // For MVP, simulate admin mode with a toggle
+  const [isAdminMode, setIsAdminMode] = useState(false);
+
+  const [newName, setNewName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [addOpen, setAddOpen] = useState(false);
+  const [transferTarget, setTransferTarget] = useState("");
+
+  const handleAddMember = async () => {
+    if (!newName.trim()) {
+      toast.error("Name is required.");
+      return;
+    }
+    const { error } = await addMember(newName.trim(), newEmail.trim() || undefined);
+    if (error) {
+      toast.error("Failed to add member.");
+    } else {
+      toast.success("Member added!");
+      setNewName("");
+      setNewEmail("");
+      setAddOpen(false);
+    }
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    const { error } = await deleteMember(id);
+    if (error) {
+      toast.error("Failed to remove member.");
+    } else {
+      toast.success(`${name} removed.`);
+    }
+  };
+
+  const handleTransfer = async () => {
+    if (!transferTarget || !adminMember) return;
+    const { error } = await transferAdmin(adminMember.id, transferTarget);
+    if (error) {
+      toast.error("Failed to transfer admin role.");
+    } else {
+      toast.success("Admin role transferred!");
+      setTransferTarget("");
+    }
+  };
+
+  return (
+    <AppLayout>
+      <div className="max-w-2xl mx-auto space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 className="font-display text-2xl font-bold text-foreground">
+            Members
+          </h1>
+          <div className="flex items-center gap-2">
+            <Button
+              variant={isAdminMode ? "default" : "outline"}
+              size="sm"
+              onClick={() => setIsAdminMode(!isAdminMode)}
+              className="font-body"
+            >
+              <UserCog className="h-4 w-4 mr-1.5" />
+              {isAdminMode ? "Admin Mode On" : "Admin Mode"}
+            </Button>
+            <Dialog open={addOpen} onOpenChange={setAddOpen}>
+              <DialogTrigger asChild>
+                <Button size="sm" className="font-body">
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  Add Member
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle className="font-display">Add Member</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-2">
+                  <div className="space-y-2">
+                    <Label className="font-body font-semibold">
+                      Name <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      placeholder="Member name"
+                      className="font-body"
+                      maxLength={100}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="font-body font-semibold">Email</Label>
+                    <Input
+                      value={newEmail}
+                      onChange={(e) => setNewEmail(e.target.value)}
+                      placeholder="Optional email"
+                      className="font-body"
+                      maxLength={255}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline" className="font-body">Cancel</Button>
+                  </DialogClose>
+                  <Button onClick={handleAddMember} className="font-body">
+                    Add Member
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-14 rounded-lg bg-muted animate-pulse" />
+            ))}
+          </div>
+        ) : members.length === 0 ? (
+          <p className="text-center text-muted-foreground font-body py-12">
+            No members yet.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {members.map((member) => (
+              <div
+                key={member.id}
+                className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary font-display font-bold text-sm">
+                    {member.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-body font-semibold text-foreground">
+                        {member.name}
+                      </span>
+                      {member.role === "admin" && (
+                        <Badge
+                          variant="outline"
+                          className="text-xs font-body bg-primary/10 text-primary border-primary/30"
+                        >
+                          <Shield className="h-3 w-3 mr-1" />
+                          Admin
+                        </Badge>
+                      )}
+                    </div>
+                    {member.email && (
+                      <span className="text-sm text-muted-foreground font-body">
+                        {member.email}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                {isAdminMode && member.role !== "admin" && (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="font-display">
+                          Remove {member.name}?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="font-body">
+                          This will remove them from the book group.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="font-body">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDelete(member.id, member.name)}
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-body"
+                        >
+                          Remove
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {isAdminMode && adminMember && members.filter((m) => m.role !== "admin").length > 0 && (
+          <div className="rounded-lg border border-border bg-card p-5 space-y-4">
+            <h2 className="font-display text-lg font-bold text-foreground">
+              Transfer Admin Role
+            </h2>
+            <p className="text-sm text-muted-foreground font-body">
+              Select a member to make them the new admin.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Select
+                value={transferTarget}
+                onValueChange={setTransferTarget}
+              >
+                <SelectTrigger className="font-body sm:w-[240px]">
+                  <SelectValue placeholder="Select member" />
+                </SelectTrigger>
+                <SelectContent>
+                  {members
+                    .filter((m) => m.role !== "admin")
+                    .map((m) => (
+                      <SelectItem key={m.id} value={m.id}>
+                        {m.name}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    disabled={!transferTarget}
+                    variant="outline"
+                    className="font-body"
+                  >
+                    Transfer
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="font-display">
+                      Transfer admin role?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="font-body">
+                      The current admin will become a regular member.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="font-body">Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleTransfer}
+                      className="font-body"
+                    >
+                      Confirm Transfer
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </div>
+        )}
+      </div>
+    </AppLayout>
+  );
+}
