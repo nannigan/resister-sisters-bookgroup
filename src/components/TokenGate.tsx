@@ -1,23 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Outlet } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
-interface AccessContextType {
-  token: string;
-  isAdmin: boolean;
-  adminMemberId: string | null;
-  setIsAdmin: (val: boolean) => void;
-}
-
-export const useAccessContext = () => {
-  const [ctx, setCtx] = useState<AccessContextType | null>(null);
-  return ctx;
-};
-
-// We'll use a simple context approach via props
 export default function TokenGate() {
   const { token } = useParams<{ token: string }>();
-  const navigate = useNavigate();
   const [valid, setValid] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -27,16 +13,18 @@ export default function TokenGate() {
     }
 
     const checkToken = async () => {
-      const { data, error } = await supabase
-        .from("app_settings")
-        .select("access_token")
-        .limit(1)
-        .maybeSingle();
+      try {
+        const { data, error } = await supabase.functions.invoke('validate-token', {
+          body: { token },
+        });
 
-      if (error || !data || data.access_token !== token) {
+        if (error || !data?.valid) {
+          setValid(false);
+        } else {
+          setValid(true);
+        }
+      } catch {
         setValid(false);
-      } else {
-        setValid(true);
       }
     };
 

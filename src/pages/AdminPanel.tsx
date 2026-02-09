@@ -22,13 +22,13 @@ import { toast } from "sonner";
 export default function AdminPanel() {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
-  const { accessToken, regenerateToken } = useAppSettings();
+  const { regenerateToken } = useAppSettings();
   const [regenerating, setRegenerating] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const currentUrl =
     typeof window !== "undefined"
-      ? `${window.location.origin}/app/${accessToken || token}`
+      ? `${window.location.origin}/app/${token}`
       : "";
 
   const handleCopy = () => {
@@ -39,8 +39,9 @@ export default function AdminPanel() {
   };
 
   const handleRegenerate = async () => {
+    if (!token) return;
     setRegenerating(true);
-    const { error, newToken } = await regenerateToken();
+    const { error, newToken } = await regenerateToken(token);
     if (error) {
       toast.error("Failed to regenerate link.");
     } else if (newToken) {
