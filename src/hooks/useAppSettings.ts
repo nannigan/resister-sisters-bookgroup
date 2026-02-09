@@ -1,49 +1,28 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export function useAppSettings() {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [settingsId, setSettingsId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const fetchSettings = useCallback(async () => {
+  const regenerateToken = async (currentToken: string) => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("app_settings")
-      .select("*")
-      .limit(1)
-      .maybeSingle();
+    try {
+      const { data, error } = await supabase.functions.invoke('regenerate-token', {
+        body: { current_token: currentToken },
+      });
 
-    if (!error && data) {
-      setAccessToken(data.access_token);
-      setSettingsId(data.id);
+      if (error || !data?.new_token) {
+        setLoading(false);
+        return { error: error || new Error('Failed to regenerate token'), newToken: null };
+      }
+
+      setLoading(false);
+      return { error: null, newToken: data.new_token as string };
+    } catch (err) {
+      setLoading(false);
+      return { error: err as Error, newToken: null };
     }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
-
-  const regenerateToken = async () => {
-    if (!settingsId) return { error: new Error("No settings found"), newToken: null };
-
-    // Generate a new random token
-    const array = new Uint8Array(24);
-    crypto.getRandomValues(array);
-    const newToken = Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
-
-    const { error } = await supabase
-      .from("app_settings")
-      .update({ access_token: newToken })
-      .eq("id", settingsId);
-
-    if (!error) {
-      setAccessToken(newToken);
-      return { error: null, newToken };
-    }
-    return { error, newToken: null };
   };
 
-  return { accessToken, loading, regenerateToken, refetch: fetchSettings };
+  return { loading, regenerateToken };
 }
