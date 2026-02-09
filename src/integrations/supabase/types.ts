@@ -42,7 +42,7 @@ export type Database = {
           created_at: string
           id: string
           link: string | null
-          meeting_month: string | null
+          meeting_date: string | null
           nominator: string | null
           page_count: number
           publication_date: string
@@ -56,7 +56,7 @@ export type Database = {
           created_at?: string
           id?: string
           link?: string | null
-          meeting_month?: string | null
+          meeting_date?: string | null
           nominator?: string | null
           page_count: number
           publication_date: string
@@ -70,7 +70,7 @@ export type Database = {
           created_at?: string
           id?: string
           link?: string | null
-          meeting_month?: string | null
+          meeting_date?: string | null
           nominator?: string | null
           page_count?: number
           publication_date?: string

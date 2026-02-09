@@ -8,7 +8,7 @@ export interface Book {
   status: "candidate" | "current" | "finished";
   publication_date: string;
   page_count: number;
-  meeting_month: string | null;
+  meeting_date: string | null;
   nominator: string | null;
   comment: string | null;
   link: string | null;

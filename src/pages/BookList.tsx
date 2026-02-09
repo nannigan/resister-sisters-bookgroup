@@ -12,9 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, ArrowUpDown } from "lucide-react";
+import { format } from "date-fns";
 
 type StatusFilter = "all" | "candidate" | "current" | "finished";
-type SortKey = "meeting_month" | "title" | "created_at";
+type SortKey = "meeting_date" | "title" | "created_at";
 
 const statusLabels: Record<string, string> = {
   candidate: "Candidate",
@@ -50,9 +51,9 @@ export default function BookList() {
     }
     result.sort((a, b) => {
       if (sortKey === "title") return a.title.localeCompare(b.title);
-      if (sortKey === "meeting_month") {
-        const am = a.meeting_month || "";
-        const bm = b.meeting_month || "";
+      if (sortKey === "meeting_date") {
+        const am = a.meeting_date || "";
+        const bm = b.meeting_date || "";
         return am.localeCompare(bm);
       }
       return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -103,7 +104,7 @@ export default function BookList() {
             <SelectContent>
               <SelectItem value="created_at">Recently Added</SelectItem>
               <SelectItem value="title">Title</SelectItem>
-              <SelectItem value="meeting_month">Meeting Month</SelectItem>
+              <SelectItem value="meeting_date">Meeting Date</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -140,8 +141,8 @@ export default function BookList() {
                     Status
                   </th>
                   <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell">
-                    Meeting
-                  </th>
+                     Meeting Date
+                   </th>
                   <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell">
                     Nominator
                   </th>
@@ -174,7 +175,9 @@ export default function BookList() {
                       <StatusBadge status={book.status} />
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden md:table-cell">
-                      {book.meeting_month || "—"}
+                      {book.meeting_date
+                        ? format(new Date(book.meeting_date + "T00:00:00"), "MMM d, yyyy")
+                        : "—"}
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}

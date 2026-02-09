@@ -24,7 +24,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Trash2, Save, ExternalLink } from "lucide-react";
+import { ArrowLeft, Trash2, Save, ExternalLink, CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { toast } from "sonner";
 
 export default function BookDetail() {
@@ -39,7 +47,7 @@ export default function BookDetail() {
     status: "candidate" as "candidate" | "current" | "finished",
     publication_date: "",
     page_count: "",
-    meeting_month: "",
+    meeting_date: "",
     nominator: "",
     comment: "",
     link: "",
@@ -57,7 +65,7 @@ export default function BookDetail() {
             status: data.status,
             publication_date: data.publication_date,
             page_count: String(data.page_count),
-            meeting_month: data.meeting_month || "",
+            meeting_date: data.meeting_date || "",
             nominator: data.nominator || "",
             comment: data.comment || "",
             link: data.link || "",
@@ -87,7 +95,7 @@ export default function BookDetail() {
       status: form.status,
       publication_date: form.publication_date,
       page_count: pageCount,
-      meeting_month: form.meeting_month || null,
+      meeting_date: form.meeting_date || null,
       nominator: form.nominator || null,
       comment: form.comment || null,
       link: form.link || null,
@@ -265,16 +273,37 @@ export default function BookDetail() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label className="font-body font-semibold">Meeting Month</Label>
-              <Input
-                value={form.meeting_month}
-                onChange={(e) =>
-                  setForm({ ...form, meeting_month: e.target.value })
-                }
-                placeholder="e.g. March 2026"
-                className="font-body"
-                maxLength={50}
-              />
+              <Label className="font-body font-semibold">Meeting Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-body",
+                      !form.meeting_date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="h-4 w-4 mr-2" />
+                    {form.meeting_date
+                      ? format(new Date(form.meeting_date + "T00:00:00"), "PPP")
+                      : "Pick a date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={form.meeting_date ? new Date(form.meeting_date + "T00:00:00") : undefined}
+                    onSelect={(date) =>
+                      setForm({
+                        ...form,
+                        meeting_date: date ? format(date, "yyyy-MM-dd") : "",
+                      })
+                    }
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             <div className="space-y-2">
               <Label className="font-body font-semibold">Nominator</Label>
