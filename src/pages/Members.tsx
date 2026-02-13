@@ -33,12 +33,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Shield, Trash2, UserCog } from "lucide-react";
+import { Plus, Shield, Trash2, UserCog, Pencil } from "lucide-react";
 import { toast } from "sonner";
+import { Member } from "@/hooks/useMembers";
 
 export default function Members() {
   const { token } = useParams<{ token: string }>();
-  const { members, loading, addMember, deleteMember, transferAdmin, adminMember } =
+  const { members, loading, addMember, updateMember, deleteMember, transferAdmin, adminMember } =
     useMembers();
 
   // For MVP, simulate admin mode with a toggle
@@ -49,6 +50,40 @@ export default function Members() {
   const [newPhone, setNewPhone] = useState("");
   const [addOpen, setAddOpen] = useState(false);
   const [transferTarget, setTransferTarget] = useState("");
+  const [editingMember, setEditingMember] = useState<Member | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editPhone, setEditPhone] = useState("");
+
+  const openEditDialog = (member: Member) => {
+    setEditingMember(member);
+    setEditName(member.name);
+    setEditEmail(member.email || "");
+    setEditPhone(member.phone || "");
+  };
+
+  const handleEditMember = async () => {
+    if (!editingMember) return;
+    if (!editName.trim()) {
+      toast.error("Name is required.");
+      return;
+    }
+    if (!editEmail.trim()) {
+      toast.error("Email is required.");
+      return;
+    }
+    const { error } = await updateMember(editingMember.id, {
+      name: editName.trim(),
+      email: editEmail.trim(),
+      phone: editPhone.trim() || null,
+    });
+    if (error) {
+      toast.error("Failed to update member.");
+    } else {
+      toast.success("Member updated!");
+      setEditingMember(null);
+    }
+  };
 
   const handleAddMember = async () => {
     if (!newName.trim()) {
@@ -218,40 +253,50 @@ export default function Members() {
                     )}
                   </div>
                 </div>
-                {isAdminMode && member.role !== "admin" && (
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className="font-display">
-                          Remove {member.name}?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription className="font-body">
-                          This will remove them from the book group.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel className="font-body">
-                          Cancel
-                        </AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDelete(member.id, member.name)}
-                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-body"
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => openEditDialog(member)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  {isAdminMode && member.role !== "admin" && (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
                         >
-                          Remove
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                )}
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="font-display">
+                            Remove {member.name}?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription className="font-body">
+                            This will remove them from the book group.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="font-body">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(member.id, member.name)}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-body"
+                          >
+                            Remove
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -317,6 +362,60 @@ export default function Members() {
           </div>
         )}
       </div>
+
+      <Dialog open={!!editingMember} onOpenChange={(open) => !open && setEditingMember(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="font-display">Edit Member</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">
+                Name <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                placeholder="Member name"
+                className="font-body"
+                maxLength={100}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">
+                Email <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                type="email"
+                value={editEmail}
+                onChange={(e) => setEditEmail(e.target.value)}
+                placeholder="Email address"
+                className="font-body"
+                maxLength={255}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">Phone</Label>
+              <Input
+                type="tel"
+                value={editPhone}
+                onChange={(e) => setEditPhone(e.target.value)}
+                placeholder="Optional phone number"
+                className="font-body"
+                maxLength={30}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline" className="font-body">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleEditMember} className="font-body">
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

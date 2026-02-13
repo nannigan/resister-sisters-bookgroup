@@ -40,6 +40,12 @@ export function useMembers() {
     return { error };
   };
 
+  const updateMember = async (id: string, updates: Partial<Pick<Member, "name" | "email" | "phone">>) => {
+    const { error } = await supabase.from("members").update(updates).eq("id", id);
+    if (!error) await fetchMembers();
+    return { error };
+  };
+
   const deleteMember = async (id: string) => {
     const { error } = await supabase.from("members").delete().eq("id", id);
     if (!error) await fetchMembers();
@@ -65,5 +71,5 @@ export function useMembers() {
 
   const adminMember = members.find((m) => m.role === "admin");
 
-  return { members, loading, addMember, deleteMember, transferAdmin, adminMember, refetch: fetchMembers };
+  return { members, loading, addMember, updateMember, deleteMember, transferAdmin, adminMember, refetch: fetchMembers };
 }
