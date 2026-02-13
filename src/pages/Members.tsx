@@ -46,6 +46,7 @@ export default function Members() {
 
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [newPhone, setNewPhone] = useState("");
   const [addOpen, setAddOpen] = useState(false);
   const [transferTarget, setTransferTarget] = useState("");
 
@@ -54,13 +55,18 @@ export default function Members() {
       toast.error("Name is required.");
       return;
     }
-    const { error } = await addMember(newName.trim(), newEmail.trim() || undefined);
+    if (!newEmail.trim()) {
+      toast.error("Email is required.");
+      return;
+    }
+    const { error } = await addMember(newName.trim(), newEmail.trim(), newPhone.trim() || undefined);
     if (error) {
       toast.error("Failed to add member.");
     } else {
       toast.success("Member added!");
       setNewName("");
       setNewEmail("");
+      setNewPhone("");
       setAddOpen(false);
     }
   };
@@ -127,13 +133,27 @@ export default function Members() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="font-body font-semibold">Email</Label>
+                    <Label className="font-body font-semibold">
+                      Email <span className="text-destructive">*</span>
+                    </Label>
                     <Input
+                      type="email"
                       value={newEmail}
                       onChange={(e) => setNewEmail(e.target.value)}
-                      placeholder="Optional email"
+                      placeholder="Email address"
                       className="font-body"
                       maxLength={255}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="font-body font-semibold">Phone</Label>
+                    <Input
+                      type="tel"
+                      value={newPhone}
+                      onChange={(e) => setNewPhone(e.target.value)}
+                      placeholder="Optional phone number"
+                      className="font-body"
+                      maxLength={30}
                     />
                   </div>
                 </div>
@@ -189,6 +209,11 @@ export default function Members() {
                     {member.email && (
                       <span className="text-sm text-muted-foreground font-body">
                         {member.email}
+                      </span>
+                    )}
+                    {member.phone && (
+                      <span className="text-sm text-muted-foreground font-body">
+                        {member.phone}
                       </span>
                     )}
                   </div>
