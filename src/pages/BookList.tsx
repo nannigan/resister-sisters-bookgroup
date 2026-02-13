@@ -11,11 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, ArrowUpDown } from "lucide-react";
+import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { format } from "date-fns";
 
 type StatusFilter = "all" | "candidate" | "current" | "finished";
-type SortKey = "meeting_date" | "title" | "created_at";
+type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "nominator" | "page_count";
+type SortDir = "asc" | "desc";
 
 const statusLabels: Record<string, string> = {
   candidate: "Candidate",
@@ -37,29 +38,56 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+function SortIcon({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKey: SortKey; sortDir: SortDir }) {
+  if (columnKey !== sortKey) return <ArrowUpDown className="h-3 w-3 ml-1 opacity-40" />;
+  return sortDir === "asc" ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />;
+}
+
 export default function BookList() {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
 
+  const toggleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir(key === "title" || key === "author" || key === "nominator" ? "asc" : "desc");
+    }
+  };
   const filtered = useMemo(() => {
     let result = [...books];
     if (statusFilter !== "all") {
       result = result.filter((b) => b.status === statusFilter);
     }
     result.sort((a, b) => {
-      if (sortKey === "title") return a.title.localeCompare(b.title);
-      if (sortKey === "meeting_date") {
-        const am = a.meeting_date || "";
-        const bm = b.meeting_date || "";
-        return am.localeCompare(bm);
+      let cmp = 0;
+      const dir = sortDir === "asc" ? 1 : -1;
+      switch (sortKey) {
+        case "title":
+          cmp = a.title.localeCompare(b.title); break;
+        case "author":
+          cmp = a.author.localeCompare(b.author); break;
+        case "status":
+          cmp = a.status.localeCompare(b.status); break;
+        case "nominator":
+          cmp = (a.nominator || "").localeCompare(b.nominator || ""); break;
+        case "page_count":
+          cmp = a.page_count - b.page_count; break;
+        case "meeting_date":
+          cmp = (a.meeting_date || "").localeCompare(b.meeting_date || ""); break;
+        case "created_at":
+        default:
+          cmp = new Date(a.created_at).getTime() - new Date(b.created_at).getTime(); break;
       }
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      return cmp * dir;
     });
     return result;
-  }, [books, statusFilter, sortKey]);
+  }, [books, statusFilter, sortKey, sortDir]);
 
   return (
     <AppLayout>
@@ -131,23 +159,23 @@ export default function BookList() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-muted/50">
-                  <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground">
-                    Title
+                  <th onClick={() => toggleSort("title")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center">Title<SortIcon columnKey="title" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell">
-                    Author
+                  <th onClick={() => toggleSort("author")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center">Author<SortIcon columnKey="author" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground">
-                    Status
+                  <th onClick={() => toggleSort("status")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center">Status<SortIcon columnKey="status" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell">
-                     Meeting Date
-                   </th>
-                  <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell">
-                    Nominator
+                  <th onClick={() => toggleSort("meeting_date")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center">Meeting Date<SortIcon columnKey="meeting_date" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell">
-                    Pages
+                  <th onClick={() => toggleSort("nominator")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center">Nominator<SortIcon columnKey="nominator" sortKey={sortKey} sortDir={sortDir} /></span>
+                  </th>
+                  <th onClick={() => toggleSort("page_count")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                    <span className="inline-flex items-center">Pages<SortIcon columnKey="page_count" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
                 </tr>
               </thead>
