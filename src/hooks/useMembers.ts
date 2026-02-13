@@ -5,6 +5,7 @@ export interface Member {
   id: string;
   name: string;
   email: string | null;
+  phone: string | null;
   role: "admin" | "member";
   created_at: string;
 }
@@ -31,10 +32,10 @@ export function useMembers() {
     fetchMembers();
   }, [fetchMembers]);
 
-  const addMember = async (name: string, email?: string) => {
+  const addMember = async (name: string, email: string, phone?: string) => {
     const { error } = await supabase
       .from("members")
-      .insert({ name, email: email || null, role: "member" as const });
+      .insert({ name, email, phone: phone || null, role: "member" as const });
     if (!error) await fetchMembers();
     return { error };
   };

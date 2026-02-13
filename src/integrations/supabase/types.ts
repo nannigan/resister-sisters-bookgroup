@@ -86,6 +86,7 @@ export type Database = {
           email: string | null
           id: string
           name: string
+          phone: string | null
           role: Database["public"]["Enums"]["member_role"]
         }
         Insert: {
@@ -93,6 +94,7 @@ export type Database = {
           email?: string | null
           id?: string
           name: string
+          phone?: string | null
           role?: Database["public"]["Enums"]["member_role"]
         }
         Update: {
@@ -100,6 +102,7 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string
+          phone?: string | null
           role?: Database["public"]["Enums"]["member_role"]
         }
         Relationships: []
