@@ -25,6 +25,7 @@ export default {
   				'sans-serif'
   			],
   			sans: [
+  				'Roboto',
   				'ui-sans-serif',
   				'system-ui',
   				'sans-serif',
@@ -34,6 +35,7 @@ export default {
   				'Noto Color Emoji'
   			],
   			serif: [
+  				'Merriweather',
   				'ui-serif',
   				'Georgia',
   				'Cambria',
