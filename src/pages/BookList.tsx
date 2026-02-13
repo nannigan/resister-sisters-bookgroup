@@ -70,8 +70,12 @@ export default function BookList() {
       switch (sortKey) {
         case "title":
           cmp = a.title.localeCompare(b.title); break;
-        case "author":
-          cmp = a.author.localeCompare(b.author); break;
+        case "author": {
+          const lastA = a.author.trim().split(/\s+/).pop() || "";
+          const lastB = b.author.trim().split(/\s+/).pop() || "";
+          cmp = lastA.localeCompare(lastB);
+          break;
+        }
         case "status":
           cmp = a.status.localeCompare(b.status); break;
         case "nominator":
