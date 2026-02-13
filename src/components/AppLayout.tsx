@@ -22,7 +22,7 @@ export default function AppLayout({ children }: {children: React.ReactNode;}) {
       <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="container flex items-center justify-between h-14 px-4">
           <Link to={base} className="flex items-center gap-2 group">
-            <BookOpen className="h-5 w-5 text-primary transition-transform group-hover:rotate-[-8deg] shadow-md opacity-85" />
+            <BookOpen className="h-5 w-5 text-primary transition-transform group-hover:rotate-[-8deg] shadow-none" />
             <span className="font-display text-lg font-bold text-foreground">
               Book Group
             </span>
