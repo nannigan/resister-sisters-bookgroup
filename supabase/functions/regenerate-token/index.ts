@@ -41,8 +41,12 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Validate current token before allowing regeneration
-    if (settings.access_token !== current_token) {
+    // Constant-time comparison to prevent timing attacks
+    const storedToken = settings.access_token;
+    const valid = storedToken.length === current_token.length &&
+      storedToken.split('').every((char: string, i: number) => char === current_token[i]);
+
+    if (!valid) {
       console.warn('regenerate-token: Invalid current token provided')
       return new Response(
         JSON.stringify({ error: 'Invalid current token' }),
