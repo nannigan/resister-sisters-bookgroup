@@ -99,6 +99,7 @@ export default function BookDetail() {
       page_count: pageCount,
       meeting_date: form.meeting_date || null,
       nominator: form.nominator || null,
+      brief_summary: form.brief_summary || null,
       comment: form.comment || null,
       link: form.link || null,
     };
