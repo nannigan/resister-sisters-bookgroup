@@ -18,7 +18,7 @@ export default function AppLayout({ children }: {children: React.ReactNode;}) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-secondary-foreground">
       <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="container flex items-center justify-between h-14 px-4">
           <Link to={base} className="flex items-center gap-2 group">
