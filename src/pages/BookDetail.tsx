@@ -49,6 +49,7 @@ export default function BookDetail() {
     page_count: "",
     meeting_date: "",
     nominator: "",
+    brief_summary: "",
     comment: "",
     link: "",
   });
