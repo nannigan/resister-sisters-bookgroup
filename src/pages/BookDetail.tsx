@@ -347,6 +347,17 @@ export default function BookDetail() {
           </div>
 
           <div className="space-y-2">
+            <Label className="font-body font-semibold">Brief Summary</Label>
+            <Textarea
+              value={form.brief_summary}
+              onChange={(e) => setForm({ ...form, brief_summary: e.target.value })}
+              placeholder="A brief summary of the book…"
+              className="font-body min-h-[80px]"
+              maxLength={500}
+            />
+          </div>
+
+          <div className="space-y-2">
             <Label className="font-body font-semibold">Group Notes</Label>
             <Textarea
               value={form.comment}
