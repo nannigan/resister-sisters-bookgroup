@@ -1,35 +1,25 @@
 
 
-## Import 83 Books from CSV
+## Add "Brief Summary" Column to Books Table
 
-Replace the single existing book record with all 83 books from your new CSV file.
+### What Changes
 
-### Data Overview
+1. **Database migration**: Add a nullable `brief_summary` text column to the `books` table (positioned logically before `comment` in the schema).
 
-The CSV contains 83 book entries spanning from April 2017 to January 2026. The data is well-structured with clean title/author separation. A few items to note:
+2. **BookDetail.tsx**: Add a "Brief Summary" textarea field between the Link field and Group Notes field. Include it in the form state, data loading, and save logic.
 
-- **Status**: All entries are "read", which maps to **"finished"** in the database.
-- **Meeting dates**: Most use M-D-YYYY format (e.g., "4-26-2017") and will be converted to proper dates (2017-04-26). One entry ("12-19 to 1-20") will be set to **2019-12-19**. One entry (last row) has an empty date and will be set to NULL.
-- **Missing authors**: Row 77 ("The Green New Deal") has no author -- will be set to **"Unknown"**.
-- **Page counts**: Only ~10 books have page counts; the rest will default to **0**.
-- **Publication dates**: Only a handful are provided; the rest will be empty strings.
-- **Split books**: Some books are split into 1st/2nd half with separate meeting dates -- these remain as separate rows.
-- **Nominator, link, comments**: All blank/null as provided.
+3. **useBooks.ts**: Add `brief_summary` to the `Book` interface and `BookInsert` type.
 
-### Steps
-
-1. **Delete** the 1 existing book record from the database.
-2. **Insert all 83 books** with cleaned and normalized data:
-   - Convert all meeting dates to YYYY-MM-DD format
-   - Map "read" status to "finished"
-   - Set missing page counts to 0
-   - Set missing author to "Unknown"
+4. **BookList.tsx**: No changes needed (brief summary doesn't need to appear in the table list view).
 
 ### Technical Details
 
-- Uses the database insert tool (not migrations) since this is a data operation, not a schema change.
-- No code changes needed -- the existing `useBooks.ts` hook and page components already support all these fields.
-- The insert will be done in batches to ensure reliability.
+- **Migration SQL**: `ALTER TABLE public.books ADD COLUMN brief_summary text;`
+- **Form field**: Textarea with placeholder like "A brief summary of the book…", max ~500 characters
+- **Hook update**: Add `brief_summary: string | null` to the Book interface
 
-**Files modified:** None (data-only operation)
+**Files modified:** 
+- New migration file (schema change)
+- `src/hooks/useBooks.ts` (interface update)
+- `src/pages/BookDetail.tsx` (form field + state)
 
