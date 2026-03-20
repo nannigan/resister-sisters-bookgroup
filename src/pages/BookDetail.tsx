@@ -49,6 +49,7 @@ export default function BookDetail() {
     page_count: "",
     meeting_date: "",
     nominator: "",
+    brief_summary: "",
     comment: "",
     link: "",
   });
@@ -67,6 +68,7 @@ export default function BookDetail() {
             page_count: String(data.page_count),
             meeting_date: data.meeting_date || "",
             nominator: data.nominator || "",
+            brief_summary: data.brief_summary || "",
             comment: data.comment || "",
             link: data.link || "",
           });
@@ -97,6 +99,7 @@ export default function BookDetail() {
       page_count: pageCount,
       meeting_date: form.meeting_date || null,
       nominator: form.nominator || null,
+      brief_summary: form.brief_summary || null,
       comment: form.comment || null,
       link: form.link || null,
     };
@@ -339,6 +342,17 @@ export default function BookDetail() {
               onChange={(e) => setForm({ ...form, link: e.target.value })}
               placeholder="https://..."
               className="font-body"
+              maxLength={500}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label className="font-body font-semibold">Brief Summary</Label>
+            <Textarea
+              value={form.brief_summary}
+              onChange={(e) => setForm({ ...form, brief_summary: e.target.value })}
+              placeholder="A brief summary of the book…"
+              className="font-body min-h-[80px]"
               maxLength={500}
             />
           </div>

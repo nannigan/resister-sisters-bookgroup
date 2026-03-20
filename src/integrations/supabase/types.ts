@@ -38,6 +38,7 @@ export type Database = {
       books: {
         Row: {
           author: string
+          brief_summary: string | null
           comment: string | null
           created_at: string
           id: string
@@ -52,6 +53,7 @@ export type Database = {
         }
         Insert: {
           author: string
+          brief_summary?: string | null
           comment?: string | null
           created_at?: string
           id?: string
@@ -66,6 +68,7 @@ export type Database = {
         }
         Update: {
           author?: string
+          brief_summary?: string | null
           comment?: string | null
           created_at?: string
           id?: string
