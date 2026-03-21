@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
