@@ -34,7 +34,19 @@ const DEFAULTS: ThemeColors = {
   theme_foreground: "0 0% 9%",
   theme_font_display: "Libre Baskerville",
   theme_font_body: "Source Sans 3",
+  theme_border_radius: "0.75rem",
 };
+
+const RADIUS_STEPS = [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5];
+
+function remToStep(rem: string): number {
+  const val = parseFloat(rem);
+  return isNaN(val) ? 0.75 : val;
+}
+
+function stepToRem(val: number): string {
+  return `${val}rem`;
+}
 
 function hslStringToHex(hsl: string): string {
   const parts = hsl.trim().split(/\s+/);
