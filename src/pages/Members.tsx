@@ -33,7 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Shield, Trash2, UserCog, Pencil } from "lucide-react";
+import { Plus, Shield, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { Member } from "@/hooks/useMembers";
 
