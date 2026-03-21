@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
@@ -38,7 +37,6 @@ import { toast } from "sonner";
 import { Member } from "@/hooks/useMembers";
 
 export default function Members() {
-  const { token } = useParams<{ token: string }>();
   const { members, loading, addMember, updateMember, deleteMember, transferAdmin, adminMember } =
     useMembers();
 

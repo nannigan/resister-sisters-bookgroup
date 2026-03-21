@@ -3,16 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
-  const [token, setToken] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = token.trim();
-    if (trimmed) {
-      navigate(`/app/${trimmed}`);
+    setError("");
+    const trimmed = email.trim();
+    if (!trimmed) return;
+
+    setSubmitting(true);
+    const result = await login(trimmed);
+    setSubmitting(false);
+
+    if (result.error) {
+      setError(result.error);
+    } else {
+      navigate("/books");
     }
   };
 
@@ -21,21 +34,28 @@ const Index = () => {
       <div className="text-center max-w-sm w-full">
         <BookOpen className="h-12 w-12 text-primary mx-auto mb-4" />
         <h1 className="font-display text-2xl font-bold text-foreground mb-2">
-          Book Group
+          Resister Sisters Book Group
         </h1>
         <p className="font-body text-muted-foreground mb-6">
-          Enter your group's access code to continue.
+          Enter your email address to continue.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <Input
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            placeholder="Paste your access code"
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError("");
+            }}
+            placeholder="your@email.com"
             className="text-center"
             autoFocus
           />
-          <Button type="submit" disabled={!token.trim()}>
-            Enter
+          {error && (
+            <p className="text-sm text-destructive font-body">{error}</p>
+          )}
+          <Button type="submit" disabled={!email.trim() || submitting}>
+            {submitting ? "Checking…" : "Enter"}
           </Button>
         </form>
       </div>

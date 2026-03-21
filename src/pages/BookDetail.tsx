@@ -36,7 +36,7 @@ import {
 import { toast } from "sonner";
 
 export default function BookDetail() {
-  const { token, bookId } = useParams<{ token: string; bookId: string }>();
+  const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
   const { addBook, updateBook, deleteBook, getBook } = useBooks();
   const isNew = bookId === "new";
@@ -110,7 +110,7 @@ export default function BookDetail() {
         toast.error("Failed to add book.");
       } else {
         toast.success("Book added!");
-        navigate(`/app/${token}`);
+        navigate("/books");
       }
     } else {
       const { error } = await updateBook(bookId!, bookData);
@@ -118,7 +118,7 @@ export default function BookDetail() {
         toast.error("Failed to update book.");
       } else {
         toast.success("Book updated!");
-        navigate(`/app/${token}`);
+        navigate("/books");
       }
     }
     setSaving(false);
@@ -130,7 +130,7 @@ export default function BookDetail() {
       toast.error("Failed to delete book.");
     } else {
       toast.success("Book deleted.");
-      navigate(`/app/${token}`);
+      navigate("/books");
     }
   };
 
@@ -152,7 +152,7 @@ export default function BookDetail() {
         <div className="flex items-center justify-between">
           <Button
             variant="ghost"
-            onClick={() => navigate(`/app/${token}`)}
+            onClick={() => navigate("/books")}
             className="font-body"
           >
             <ArrowLeft className="h-4 w-4 mr-1.5" />

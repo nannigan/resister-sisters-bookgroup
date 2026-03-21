@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBooks, Book } from "@/hooks/useBooks";
 import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
@@ -38,7 +38,6 @@ function SortIcon({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKey
 }
 
 export default function BookList() {
-  const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
@@ -98,7 +97,7 @@ export default function BookList() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
-          <Button onClick={() => navigate(`/app/${token}/books/new`)} className="font-body">
+          <Button onClick={() => navigate("/books/new")} className="font-body">
             <Plus className="h-4 w-4 mr-1.5" />
             Add Book
           </Button>
@@ -198,7 +197,7 @@ export default function BookList() {
                 {filtered.map((book) => (
                   <tr
                     key={book.id}
-                    onClick={() => navigate(`/app/${token}/books/${book.id}`)}
+                    onClick={() => navigate(`/books/${book.id}`)}
                     className="border-b border-border last:border-0 hover:bg-muted/30 cursor-pointer transition-colors"
                   >
                     <td className="px-4 py-3">
