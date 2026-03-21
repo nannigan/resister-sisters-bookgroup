@@ -141,6 +141,8 @@ export default function AdminPanel() {
             </AlertDialog>
           </div>
         </div>
+
+        <ThemeConfigurator />
       </div>
     </AppLayout>
   );
