@@ -37,11 +37,10 @@ import { toast } from "sonner";
 import { Member } from "@/hooks/useMembers";
 
 export default function Members() {
+  const { member: currentUser } = useAuth();
+  const isAdmin = currentUser?.role === "admin";
   const { members, loading, addMember, updateMember, deleteMember, transferAdmin, adminMember } =
     useMembers();
-
-  // For MVP, simulate admin mode with a toggle
-  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
