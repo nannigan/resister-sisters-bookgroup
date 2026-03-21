@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,14 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
+  const { member, loading, login } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && member) {
+      navigate("/books", { replace: true });
+    }
+  }, [member, loading, navigate]);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
