@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppSettings } from "@/hooks/useAppSettings";
 import AppLayout from "@/components/AppLayout";
+import ThemeConfigurator from "@/components/ThemeConfigurator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
