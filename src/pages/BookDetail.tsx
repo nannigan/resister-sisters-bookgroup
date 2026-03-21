@@ -110,7 +110,7 @@ export default function BookDetail() {
         toast.error("Failed to add book.");
       } else {
         toast.success("Book added!");
-        navigate(`/app/${token}`);
+        navigate("/books");
       }
     } else {
       const { error } = await updateBook(bookId!, bookData);
