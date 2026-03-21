@@ -328,13 +328,13 @@ export default function Members() {
               </Select>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button
+                  <MovingBorderButton
+                    containerClassName="h-10"
                     disabled={!transferTarget}
-                    variant="outline"
                     className="font-body"
                   >
                     Transfer
-                  </Button>
+                  </MovingBorderButton>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
