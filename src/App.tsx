@@ -11,6 +11,7 @@ import BookList from "./pages/BookList";
 import BookDetail from "./pages/BookDetail";
 import Members from "./pages/Members";
 import AdminPanel from "./pages/AdminPanel";
+import Vote from "./pages/Vote";
 
 const queryClient = new QueryClient();
 
