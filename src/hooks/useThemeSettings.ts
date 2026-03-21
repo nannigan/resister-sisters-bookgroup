@@ -32,7 +32,7 @@ export function useThemeSettings() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("app_settings")
-        .select("theme_primary, theme_background, theme_accent, theme_card, theme_foreground, theme_font_display, theme_font_body")
+        .select("theme_primary, theme_background, theme_accent, theme_card, theme_foreground, theme_font_display, theme_font_body, theme_border_radius")
         .limit(1)
         .single();
       if (error || !data) return DEFAULT_THEME;

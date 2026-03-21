@@ -209,6 +209,37 @@ export default function ThemeConfigurator() {
         </div>
       </div>
 
+      {/* Border Radius Section */}
+      <div className="border-t border-border pt-5 space-y-4">
+        <div className="flex items-center gap-2">
+          <RectangleHorizontal className="h-5 w-5 text-primary" />
+          <h3 className="font-display font-semibold text-foreground">Border Radius</h3>
+        </div>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="font-body font-semibold text-sm">Roundness</Label>
+            <span className="text-xs font-mono text-muted-foreground">{draft.theme_border_radius}</span>
+          </div>
+          <Slider
+            min={0}
+            max={1.5}
+            step={0.25}
+            value={[remToStep(draft.theme_border_radius)]}
+            onValueChange={([v]) => setDraft({ ...draft, theme_border_radius: stepToRem(v) })}
+          />
+          <div className="flex items-center gap-3 pt-1">
+            {[0, 0.5, 0.75, 1.25].map((r) => (
+              <div
+                key={r}
+                className="w-12 h-12 border-2 border-primary bg-primary/10"
+                style={{ borderRadius: `${r}rem` }}
+              />
+            ))}
+            <span className="text-xs text-muted-foreground font-body ml-1">Preview</span>
+          </div>
+        </div>
+      </div>
+
       <div className="flex gap-2 pt-2">
         <Button onClick={handleSave} disabled={saving} className="font-body">
           {saving ? "Saving…" : "Save Theme"}

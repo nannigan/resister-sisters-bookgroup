@@ -49,6 +49,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     loadGoogleFont(theme.theme_font_body);
     root.style.setProperty("--font-display", `'${theme.theme_font_display}', Georgia, serif`);
     root.style.setProperty("--font-body", `'${theme.theme_font_body}', system-ui, sans-serif`);
+    root.style.setProperty("--radius", theme.theme_border_radius);
   }, [theme]);
 
   return <>{children}</>;
