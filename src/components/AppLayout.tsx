@@ -1,5 +1,5 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { BookOpen, Users, Settings } from "lucide-react";
+import { BookOpen, Users, Settings, Vote } from "lucide-react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { token } = useParams<{ token: string }>();
