@@ -18,7 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { RefreshCw, Copy, Check, AlertTriangle } from "lucide-react";
+import { RefreshCw, Copy, Check, AlertTriangle, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AdminPanel() {
