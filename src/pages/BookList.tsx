@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBooks, Book } from "@/hooks/useBooks";
 import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import {
   Select,
   SelectContent,
