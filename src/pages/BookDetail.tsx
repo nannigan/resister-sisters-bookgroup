@@ -369,14 +369,15 @@ export default function BookDetail() {
             />
           </div>
 
-          <Button
+          <MovingBorderButton
+            containerClassName="w-full sm:w-auto h-10"
             onClick={handleSave}
             disabled={saving}
-            className="w-full sm:w-auto font-body"
+            className="font-body"
           >
             <Save className="h-4 w-4 mr-1.5" />
             {saving ? "Saving…" : isNew ? "Add Book" : "Save Changes"}
-          </Button>
+          </MovingBorderButton>
         </div>
       </div>
     </AppLayout>

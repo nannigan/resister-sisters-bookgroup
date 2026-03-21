@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import { Input } from "@/components/ui/input";
 
 const Index = () => {
@@ -34,9 +34,14 @@ const Index = () => {
             className="text-center"
             autoFocus
           />
-          <Button type="submit" disabled={!token.trim()}>
+          <MovingBorderButton
+            containerClassName="w-full h-10"
+            className="font-body"
+            type="submit"
+            disabled={!token.trim()}
+          >
             Enter
-          </Button>
+          </MovingBorderButton>
         </form>
       </div>
     </div>

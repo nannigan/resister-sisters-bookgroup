@@ -411,9 +411,9 @@ export default function Members() {
             <DialogClose asChild>
               <Button variant="outline" className="font-body">Cancel</Button>
             </DialogClose>
-            <Button onClick={handleEditMember} className="font-body">
+            <MovingBorderButton containerClassName="h-10" onClick={handleEditMember} className="font-body">
               Save Changes
-            </Button>
+            </MovingBorderButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
