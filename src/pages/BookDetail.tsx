@@ -237,7 +237,7 @@ export default function BookDetail() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="candidate">Candidate</SelectItem>
+                  <SelectItem value="candidate">Suggested</SelectItem>
                   <SelectItem value="current">Currently Reading</SelectItem>
                   <SelectItem value="finished">Finished</SelectItem>
                 </SelectContent>
