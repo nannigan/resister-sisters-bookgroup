@@ -61,5 +61,11 @@ export function useVotes() {
     return { totalPoints, voteCount: bookVotes.length };
   };
 
-  return { votes, loading, submitBallot, getMemberVotes, getBookVoteSummary, refetch: fetchVotes };
+  const clearAllVotes = async () => {
+    const { error } = await supabase.from("votes").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    if (!error) await fetchVotes();
+    return { error };
+  };
+
+  return { votes, loading, submitBallot, getMemberVotes, getBookVoteSummary, clearAllVotes, refetch: fetchVotes };
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppSettings } from "@/hooks/useAppSettings";
+import { useVotes } from "@/hooks/useVotes";
 import AppLayout from "@/components/AppLayout";
 import ThemeConfigurator from "@/components/ThemeConfigurator";
 import { Button } from "@/components/ui/button";
@@ -17,14 +18,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { RefreshCw, Copy, Check, AlertTriangle } from "lucide-react";
+import { RefreshCw, Copy, Check, AlertTriangle, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AdminPanel() {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const { regenerateToken } = useAppSettings();
+  const { votes, clearAllVotes } = useVotes();
   const [regenerating, setRegenerating] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const currentUrl =
@@ -135,6 +138,60 @@ export default function AdminPanel() {
                     className="font-body"
                   >
                     Regenerate
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+
+          <div className="border-t border-border pt-5 space-y-3">
+            <div className="flex items-start gap-2">
+              <Trash2 className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-body font-semibold text-foreground">
+                  Reset Voting Round
+                </h3>
+                <p className="text-sm text-muted-foreground font-body">
+                  Clear all votes to start a fresh voting round. This cannot be undone.
+                </p>
+              </div>
+            </div>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  disabled={clearing || votes.length === 0}
+                  className="font-body border-destructive/50 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <Trash2 className={`h-4 w-4 mr-1.5 ${clearing ? "animate-spin" : ""}`} />
+                  {clearing ? "Clearing…" : `Clear All Votes (${votes.length})`}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="font-display">
+                    Clear all votes?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="font-body">
+                    This will permanently delete all {votes.length} vote{votes.length !== 1 ? "s" : ""} and reset the results. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="font-body">Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={async () => {
+                      setClearing(true);
+                      const { error } = await clearAllVotes();
+                      if (error) {
+                        toast.error("Failed to clear votes.");
+                      } else {
+                        toast.success("All votes cleared!");
+                      }
+                      setClearing(false);
+                    }}
+                    className="font-body bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    Clear All Votes
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
