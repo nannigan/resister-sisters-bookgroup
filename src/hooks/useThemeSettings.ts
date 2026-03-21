@@ -10,6 +10,7 @@ export interface ThemeColors {
   theme_foreground: string;
   theme_font_display: string;
   theme_font_body: string;
+  theme_border_radius: string;
 }
 
 const DEFAULT_THEME: ThemeColors = {
@@ -20,6 +21,7 @@ const DEFAULT_THEME: ThemeColors = {
   theme_foreground: "0 0% 9%",
   theme_font_display: "Libre Baskerville",
   theme_font_body: "Source Sans 3",
+  theme_border_radius: "0.75rem",
 };
 
 export function useThemeSettings() {
@@ -30,7 +32,7 @@ export function useThemeSettings() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("app_settings")
-        .select("theme_primary, theme_background, theme_accent, theme_card, theme_foreground, theme_font_display, theme_font_body")
+        .select("theme_primary, theme_background, theme_accent, theme_card, theme_foreground, theme_font_display, theme_font_body, theme_border_radius")
         .limit(1)
         .single();
       if (error || !data) return DEFAULT_THEME;

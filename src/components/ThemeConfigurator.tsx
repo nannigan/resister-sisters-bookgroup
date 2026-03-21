@@ -4,7 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Palette, Type, RotateCcw } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Palette, Type, RotateCcw, RectangleHorizontal } from "lucide-react";
 import { toast } from "sonner";
 
 const COLOR_FIELDS: { key: keyof ThemeColors; label: string; description: string }[] = [
@@ -33,7 +34,19 @@ const DEFAULTS: ThemeColors = {
   theme_foreground: "0 0% 9%",
   theme_font_display: "Libre Baskerville",
   theme_font_body: "Source Sans 3",
+  theme_border_radius: "0.75rem",
 };
+
+const RADIUS_STEPS = [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5];
+
+function remToStep(rem: string): number {
+  const val = parseFloat(rem);
+  return isNaN(val) ? 0.75 : val;
+}
+
+function stepToRem(val: number): string {
+  return `${val}rem`;
+}
 
 function hslStringToHex(hsl: string): string {
   const parts = hsl.trim().split(/\s+/);
@@ -192,6 +205,37 @@ export default function ThemeConfigurator() {
             >
               The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Border Radius Section */}
+      <div className="border-t border-border pt-5 space-y-4">
+        <div className="flex items-center gap-2">
+          <RectangleHorizontal className="h-5 w-5 text-primary" />
+          <h3 className="font-display font-semibold text-foreground">Border Radius</h3>
+        </div>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="font-body font-semibold text-sm">Roundness</Label>
+            <span className="text-xs font-mono text-muted-foreground">{draft.theme_border_radius}</span>
+          </div>
+          <Slider
+            min={0}
+            max={1.5}
+            step={0.25}
+            value={[remToStep(draft.theme_border_radius)]}
+            onValueChange={([v]) => setDraft({ ...draft, theme_border_radius: stepToRem(v) })}
+          />
+          <div className="flex items-center gap-3 pt-1">
+            {[0, 0.5, 0.75, 1.25].map((r) => (
+              <div
+                key={r}
+                className="w-12 h-12 border-2 border-primary bg-primary/10"
+                style={{ borderRadius: `${r}rem` }}
+              />
+            ))}
+            <span className="text-xs text-muted-foreground font-body ml-1">Preview</span>
           </div>
         </div>
       </div>

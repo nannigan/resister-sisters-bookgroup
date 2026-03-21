@@ -21,6 +21,7 @@ export type Database = {
           id: string
           theme_accent: string
           theme_background: string
+          theme_border_radius: string
           theme_card: string
           theme_font_body: string
           theme_font_display: string
@@ -34,6 +35,7 @@ export type Database = {
           id?: string
           theme_accent?: string
           theme_background?: string
+          theme_border_radius?: string
           theme_card?: string
           theme_font_body?: string
           theme_font_display?: string
@@ -47,6 +49,7 @@ export type Database = {
           id?: string
           theme_accent?: string
           theme_background?: string
+          theme_border_radius?: string
           theme_card?: string
           theme_font_body?: string
           theme_font_display?: string
