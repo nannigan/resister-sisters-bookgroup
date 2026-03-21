@@ -172,7 +172,7 @@ export default function BookList() {
                   <th onClick={() => toggleSort("status")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-accent">
                     <span className="inline-flex items-center">Status<SortIcon columnKey="status" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th onClick={() => toggleSort("meeting_date")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                  <th onClick={() => toggleSort("meeting_date")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent">
                     <span className="inline-flex items-center">Meeting Date<SortIcon columnKey="meeting_date" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
                   <th onClick={() => toggleSort("nominator")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
