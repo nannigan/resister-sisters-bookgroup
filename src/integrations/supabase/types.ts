@@ -134,6 +134,45 @@ export type Database = {
         }
         Relationships: []
       }
+      votes: {
+        Row: {
+          book_id: string
+          created_at: string
+          id: string
+          member_id: string
+          rank: number
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          id?: string
+          member_id: string
+          rank: number
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          id?: string
+          member_id?: string
+          rank?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
