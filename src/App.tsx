@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/app/:token" element={<TokenGate />}>
             <Route index element={<BookList />} />
             <Route path="books/:bookId" element={<BookDetail />} />
+            <Route path="vote" element={<Vote />} />
             <Route path="members" element={<Members />} />
             <Route path="admin" element={<AdminPanel />} />
           </Route>

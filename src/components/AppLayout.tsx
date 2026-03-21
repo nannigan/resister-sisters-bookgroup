@@ -8,6 +8,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { to: base, label: "Books", icon: BookOpen, exact: true },
+    { to: `${base}/vote`, label: "Vote", icon: Vote },
     { to: `${base}/members`, label: "Members", icon: Users },
     { to: `${base}/admin`, label: "Admin", icon: Settings },
   ];
