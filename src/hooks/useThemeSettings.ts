@@ -21,6 +21,7 @@ const DEFAULT_THEME: ThemeColors = {
   theme_foreground: "0 0% 9%",
   theme_font_display: "Libre Baskerville",
   theme_font_body: "Source Sans 3",
+  theme_border_radius: "0.75rem",
 };
 
 export function useThemeSettings() {
