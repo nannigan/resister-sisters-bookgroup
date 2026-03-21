@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBooks, BookInsert } from "@/hooks/useBooks";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -368,14 +369,15 @@ export default function BookDetail() {
             />
           </div>
 
-          <Button
+          <MovingBorderButton
+            containerClassName="w-full sm:w-auto h-10"
             onClick={handleSave}
             disabled={saving}
-            className="w-full sm:w-auto font-body"
+            className="font-body"
           >
             <Save className="h-4 w-4 mr-1.5" />
             {saving ? "Saving…" : isNew ? "Add Book" : "Save Changes"}
-          </Button>
+          </MovingBorderButton>
         </div>
       </div>
     </AppLayout>

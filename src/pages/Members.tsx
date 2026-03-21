@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -145,10 +146,10 @@ export default function Members() {
             </Button>
             <Dialog open={addOpen} onOpenChange={setAddOpen}>
               <DialogTrigger asChild>
-                <Button size="sm" className="font-body">
+                <MovingBorderButton containerClassName="h-9" className="font-body text-sm px-3">
                   <Plus className="h-4 w-4 mr-1.5" />
                   Add Member
-                </Button>
+                </MovingBorderButton>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -196,9 +197,9 @@ export default function Members() {
                   <DialogClose asChild>
                     <Button variant="outline" className="font-body">Cancel</Button>
                   </DialogClose>
-                  <Button onClick={handleAddMember} className="font-body">
+                  <MovingBorderButton containerClassName="h-10" onClick={handleAddMember} className="font-body">
                     Add Member
-                  </Button>
+                  </MovingBorderButton>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -410,9 +411,9 @@ export default function Members() {
             <DialogClose asChild>
               <Button variant="outline" className="font-body">Cancel</Button>
             </DialogClose>
-            <Button onClick={handleEditMember} className="font-body">
+            <MovingBorderButton containerClassName="h-10" onClick={handleEditMember} className="font-body">
               Save Changes
-            </Button>
+            </MovingBorderButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>

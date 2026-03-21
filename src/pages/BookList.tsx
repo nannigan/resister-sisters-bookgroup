@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBooks, Book } from "@/hooks/useBooks";
 import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import {
   Select,
   SelectContent,
@@ -100,13 +100,14 @@ export default function BookList() {
           <h1 className="font-display text-2xl font-bold text-foreground">
             Book Group Reading List
           </h1>
-          <Button
+          <MovingBorderButton
+            containerClassName="h-10"
             onClick={() => navigate(`/app/${token}/books/new`)}
             className="font-body"
           >
             <Plus className="h-4 w-4 mr-1.5" />
             Add Book
-          </Button>
+          </MovingBorderButton>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
