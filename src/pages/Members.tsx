@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
@@ -32,16 +33,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Shield, Trash2, UserCog, Pencil } from "lucide-react";
+import { Plus, Shield, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { Member } from "@/hooks/useMembers";
 
 export default function Members() {
+  const { member: currentUser } = useAuth();
+  const isAdmin = currentUser?.role === "admin";
   const { members, loading, addMember, updateMember, deleteMember, transferAdmin, adminMember } =
     useMembers();
-
-  // For MVP, simulate admin mode with a toggle
-  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -131,16 +131,7 @@ export default function Members() {
           <h1 className="font-display text-2xl font-bold text-foreground">
             Members
           </h1>
-          <div className="flex items-center gap-2">
-            <Button
-              variant={isAdminMode ? "default" : "outline"}
-              size="sm"
-              onClick={() => setIsAdminMode(!isAdminMode)}
-              className="font-body"
-            >
-              <UserCog className="h-4 w-4 mr-1.5" />
-              {isAdminMode ? "Admin Mode On" : "Admin Mode"}
-            </Button>
+          {isAdmin && (
             <Dialog open={addOpen} onOpenChange={setAddOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" className="font-body">
@@ -200,7 +191,7 @@ export default function Members() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-          </div>
+          )}
         </div>
 
         {loading ? (
@@ -252,15 +243,17 @@ export default function Members() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => openEditDialog(member)}
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  {isAdminMode && member.role !== "admin" && (
+                  {isAdmin && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openEditDialog(member)}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                  )}
+                  {isAdmin && member.role !== "admin" && (
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
@@ -300,7 +293,7 @@ export default function Members() {
           </div>
         )}
 
-        {isAdminMode && adminMember && members.filter((m) => m.role !== "admin").length > 0 && (
+        {isAdmin && adminMember && members.filter((m) => m.role !== "admin").length > 0 && (
           <div className="rounded-lg border border-border bg-card p-5 space-y-4">
             <h2 className="font-display text-lg font-bold text-foreground">
               Transfer Admin Role
