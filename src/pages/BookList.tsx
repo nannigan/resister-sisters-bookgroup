@@ -178,7 +178,7 @@ export default function BookList() {
                   <th onClick={() => toggleSort("nominator")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent">
                     <span className="inline-flex items-center">Nominator<SortIcon columnKey="nominator" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th onClick={() => toggleSort("page_count")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                  <th onClick={() => toggleSort("page_count")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent">
                     <span className="inline-flex items-center">Pages<SortIcon columnKey="page_count" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
                 </tr>
