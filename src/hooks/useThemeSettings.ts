@@ -10,6 +10,7 @@ export interface ThemeColors {
   theme_foreground: string;
   theme_font_display: string;
   theme_font_body: string;
+  theme_border_radius: string;
 }
 
 const DEFAULT_THEME: ThemeColors = {
