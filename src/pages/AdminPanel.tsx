@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppSettings } from "@/hooks/useAppSettings";
 import AppLayout from "@/components/AppLayout";
-import { Button as MovingBorderButton } from "@/components/ui/moving-border";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -71,16 +71,18 @@ export default function AdminPanel() {
                 readOnly
                 className="font-body text-sm bg-muted"
               />
-              <MovingBorderButton
-                containerClassName="h-10 w-10 shrink-0"
+              <Button
+                variant="outline"
+                size="icon"
                 onClick={handleCopy}
+                className="shrink-0"
               >
                 {copied ? (
                   <Check className="h-4 w-4 text-primary" />
                 ) : (
                   <Copy className="h-4 w-4" />
                 )}
-              </MovingBorderButton>
+              </Button>
             </div>
             <p className="text-xs text-muted-foreground font-body">
               Share this link with your book group members.
@@ -102,8 +104,8 @@ export default function AdminPanel() {
             </div>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <MovingBorderButton
-                  containerClassName="h-10"
+                <Button
+                  variant="outline"
                   disabled={regenerating}
                   className="font-body"
                 >
@@ -113,7 +115,7 @@ export default function AdminPanel() {
                     }`}
                   />
                   {regenerating ? "Regenerating…" : "Regenerate Link"}
-                </MovingBorderButton>
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>

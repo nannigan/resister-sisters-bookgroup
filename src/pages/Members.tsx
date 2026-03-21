@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
-import { Button as MovingBorderButton } from "@/components/ui/moving-border";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
@@ -134,20 +134,21 @@ export default function Members() {
             Members
           </h1>
           <div className="flex items-center gap-2">
-            <MovingBorderButton
-              containerClassName="h-9"
+            <Button
+              variant={isAdminMode ? "default" : "outline"}
+              size="sm"
               onClick={() => setIsAdminMode(!isAdminMode)}
-              className="font-body text-sm px-3"
+              className="font-body"
             >
               <UserCog className="h-4 w-4 mr-1.5" />
               {isAdminMode ? "Admin Mode On" : "Admin Mode"}
-            </MovingBorderButton>
+            </Button>
             <Dialog open={addOpen} onOpenChange={setAddOpen}>
               <DialogTrigger asChild>
-                <MovingBorderButton containerClassName="h-9" className="font-body text-sm px-3">
+                <Button size="sm" className="font-body">
                   <Plus className="h-4 w-4 mr-1.5" />
                   Add Member
-                </MovingBorderButton>
+                </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -193,11 +194,11 @@ export default function Members() {
                 </div>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <MovingBorderButton containerClassName="h-10" className="font-body">Cancel</MovingBorderButton>
+                    <Button variant="outline" className="font-body">Cancel</Button>
                   </DialogClose>
-                  <MovingBorderButton containerClassName="h-10" onClick={handleAddMember} className="font-body">
+                  <Button onClick={handleAddMember} className="font-body">
                     Add Member
-                  </MovingBorderButton>
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -253,22 +254,24 @@ export default function Members() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
-                  <MovingBorderButton
-                    containerClassName="h-8 w-8"
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => openEditDialog(member)}
                     className="text-muted-foreground hover:text-foreground"
                   >
                     <Pencil className="h-4 w-4" />
-                  </MovingBorderButton>
+                  </Button>
                   {isAdminMode && member.role !== "admin" && (
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <MovingBorderButton
-                          containerClassName="h-8 w-8"
-                          className="text-destructive hover:text-destructive"
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
                         >
                           <Trash2 className="h-4 w-4" />
-                        </MovingBorderButton>
+                        </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
@@ -327,13 +330,13 @@ export default function Members() {
               </Select>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <MovingBorderButton
-                    containerClassName="h-10"
+                  <Button
                     disabled={!transferTarget}
+                    variant="outline"
                     className="font-body"
                   >
                     Transfer
-                  </MovingBorderButton>
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -405,11 +408,11 @@ export default function Members() {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <MovingBorderButton containerClassName="h-10" className="font-body">Cancel</MovingBorderButton>
+              <Button variant="outline" className="font-body">Cancel</Button>
             </DialogClose>
-            <MovingBorderButton containerClassName="h-10" onClick={handleEditMember} className="font-body">
+            <Button onClick={handleEditMember} className="font-body">
               Save Changes
-            </MovingBorderButton>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

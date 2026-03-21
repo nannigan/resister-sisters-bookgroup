@@ -1,35 +1,25 @@
 
 
-## Add Aceternity Moving Border Component
+## Add "Brief Summary" Column to Books Table
 
 ### What Changes
 
-1. **Install `framer-motion`** as a dependency.
+1. **Database migration**: Add a nullable `brief_summary` text column to the `books` table (positioned logically before `comment` in the schema).
 
-2. **Create `src/components/ui/moving-border.tsx`** with the full Aceternity Moving Border component source (the pasted code had its JSX stripped — I'll reconstruct the complete component from the known Aceternity source).
+2. **BookDetail.tsx**: Add a "Brief Summary" textarea field between the Link field and Group Notes field. Include it in the form state, data loading, and save logic.
 
-3. **Update `tailwind.config.ts`** to add the `addVariablesForColors` plugin, which exposes all Tailwind colors as CSS variables (needed for `var(--sky-500)` etc. in the radial gradient). The existing ESM config format will be preserved — no conversion to CommonJS.
+3. **useBooks.ts**: Add `brief_summary` to the `Book` interface and `BookInsert` type.
+
+4. **BookList.tsx**: No changes needed (brief summary doesn't need to appear in the table list view).
 
 ### Technical Details
 
-**moving-border.tsx** — Two exports:
-- `Button` — wrapper component with animated border container (accepts `borderRadius`, `as`, `containerClassName`, `borderClassName`, `duration`, `className`)
-- `MovingBorder` — the SVG + framer-motion animation that traces a rect path
+- **Migration SQL**: `ALTER TABLE public.books ADD COLUMN brief_summary text;`
+- **Form field**: Textarea with placeholder like "A brief summary of the book…", max ~500 characters
+- **Hook update**: Add `brief_summary: string | null` to the Book interface
 
-**Tailwind plugin** — Added at the end of the plugins array:
-```ts
-function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
-  addBase({ ":root": newVars });
-}
-```
-Uses ESM import for `flattenColorPalette` from `tailwindcss/lib/util/flattenColorPalette`.
-
-**Files modified:**
-- `package.json` (add framer-motion)
-- `src/components/ui/moving-border.tsx` (new file)
-- `tailwind.config.ts` (add plugin + import)
+**Files modified:** 
+- New migration file (schema change)
+- `src/hooks/useBooks.ts` (interface update)
+- `src/pages/BookDetail.tsx` (form field + state)
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBooks, BookInsert } from "@/hooks/useBooks";
 import AppLayout from "@/components/AppLayout";
-import { Button as MovingBorderButton } from "@/components/ui/moving-border";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -150,21 +150,21 @@ export default function BookDetail() {
     <AppLayout>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
-          <MovingBorderButton
-            containerClassName="h-10"
+          <Button
+            variant="ghost"
             onClick={() => navigate(`/app/${token}`)}
             className="font-body"
           >
             <ArrowLeft className="h-4 w-4 mr-1.5" />
             Back to list
-          </MovingBorderButton>
+          </Button>
           {!isNew && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <MovingBorderButton containerClassName="h-9" className="font-body text-destructive text-sm px-3">
+                <Button variant="destructive" size="sm" className="font-body">
                   <Trash2 className="h-4 w-4 mr-1.5" />
                   Delete
-                </MovingBorderButton>
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -279,10 +279,10 @@ export default function BookDetail() {
               <Label className="font-body font-semibold">Meeting Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <MovingBorderButton
-                    containerClassName="w-full h-10"
+                  <Button
+                    variant="outline"
                     className={cn(
-                      "justify-start text-left font-body",
+                      "w-full justify-start text-left font-body",
                       !form.meeting_date && "text-muted-foreground"
                     )}
                   >
@@ -290,7 +290,7 @@ export default function BookDetail() {
                     {form.meeting_date
                       ? format(new Date(form.meeting_date + "T00:00:00"), "PPP")
                       : "Pick a date"}
-                  </MovingBorderButton>
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
@@ -368,15 +368,14 @@ export default function BookDetail() {
             />
           </div>
 
-          <MovingBorderButton
-            containerClassName="w-full sm:w-auto h-10"
+          <Button
             onClick={handleSave}
             disabled={saving}
-            className="font-body"
+            className="w-full sm:w-auto font-body"
           >
             <Save className="h-4 w-4 mr-1.5" />
             {saving ? "Saving…" : isNew ? "Add Book" : "Save Changes"}
-          </MovingBorderButton>
+          </Button>
         </div>
       </div>
     </AppLayout>
