@@ -9,8 +9,8 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  SelectValue } from
+"@/components/ui/select";
 import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { format } from "date-fns";
 
@@ -21,30 +21,30 @@ type SortDir = "asc" | "desc";
 const statusLabels: Record<string, string> = {
   candidate: "Candidate",
   current: "Currently Reading",
-  finished: "Finished",
+  finished: "Finished"
 };
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status }: {status: string;}) {
   const cls =
-    status === "candidate"
-      ? "status-badge-candidate"
-      : status === "current"
-      ? "status-badge-current"
-      : "status-badge-finished";
+  status === "candidate" ?
+  "status-badge-candidate" :
+  status === "current" ?
+  "status-badge-current" :
+  "status-badge-finished";
   return (
     <Badge variant="outline" className={`${cls} font-body text-xs`}>
       {statusLabels[status]}
-    </Badge>
-  );
+    </Badge>);
+
 }
 
-function SortIcon({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKey: SortKey; sortDir: SortDir }) {
+function SortIcon({ columnKey, sortKey, sortDir }: {columnKey: SortKey;sortKey: SortKey;sortDir: SortDir;}) {
   if (columnKey !== sortKey) return <ArrowUpDown className="h-3 w-3 ml-1 opacity-40" />;
   return sortDir === "asc" ? <ArrowUp className="h-3 w-3 ml-1" /> : <ArrowDown className="h-3 w-3 ml-1" />;
 }
 
 export default function BookList() {
-  const { token } = useParams<{ token: string }>();
+  const { token } = useParams<{token: string;}>();
   const navigate = useNavigate();
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
@@ -53,7 +53,7 @@ export default function BookList() {
 
   const toggleSort = (key: SortKey) => {
     if (sortKey === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+      setSortDir((d) => d === "asc" ? "desc" : "asc");
     } else {
       setSortKey(key);
       setSortDir(key === "title" || key === "author" || key === "nominator" ? "asc" : "desc");
@@ -69,24 +69,24 @@ export default function BookList() {
       const dir = sortDir === "asc" ? 1 : -1;
       switch (sortKey) {
         case "title":
-          cmp = a.title.localeCompare(b.title); break;
-        case "author": {
-          const lastA = a.author.trim().split(/\s+/).pop() || "";
-          const lastB = b.author.trim().split(/\s+/).pop() || "";
-          cmp = lastA.localeCompare(lastB);
-          break;
-        }
+          cmp = a.title.localeCompare(b.title);break;
+        case "author":{
+            const lastA = a.author.trim().split(/\s+/).pop() || "";
+            const lastB = b.author.trim().split(/\s+/).pop() || "";
+            cmp = lastA.localeCompare(lastB);
+            break;
+          }
         case "status":
-          cmp = a.status.localeCompare(b.status); break;
+          cmp = a.status.localeCompare(b.status);break;
         case "nominator":
-          cmp = (a.nominator || "").localeCompare(b.nominator || ""); break;
+          cmp = (a.nominator || "").localeCompare(b.nominator || "");break;
         case "page_count":
-          cmp = a.page_count - b.page_count; break;
+          cmp = a.page_count - b.page_count;break;
         case "meeting_date":
-          cmp = (a.meeting_date || "").localeCompare(b.meeting_date || ""); break;
+          cmp = (a.meeting_date || "").localeCompare(b.meeting_date || "");break;
         case "created_at":
         default:
-          cmp = new Date(a.created_at).getTime() - new Date(b.created_at).getTime(); break;
+          cmp = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();break;
       }
       return cmp * dir;
     });
@@ -102,8 +102,8 @@ export default function BookList() {
           </h1>
           <Button
             onClick={() => navigate(`/app/${token}/books/new`)}
-            className="font-body"
-          >
+            className="font-body">
+            
             <Plus className="h-4 w-4 mr-1.5" />
             Add Book
           </Button>
@@ -112,8 +112,8 @@ export default function BookList() {
         <div className="flex flex-wrap items-center gap-3">
           <Select
             value={statusFilter}
-            onValueChange={(v) => setStatusFilter(v as StatusFilter)}
-          >
+            onValueChange={(v) => setStatusFilter(v as StatusFilter)}>
+            
             <SelectTrigger className="w-[180px] font-body">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
@@ -127,8 +127,8 @@ export default function BookList() {
 
           <Select
             value={sortKey}
-            onValueChange={(v) => setSortKey(v as SortKey)}
-          >
+            onValueChange={(v) => setSortKey(v as SortKey)}>
+            
             <SelectTrigger className="w-[180px] font-body">
               <ArrowUpDown className="h-3.5 w-3.5 mr-1.5" />
               <SelectValue placeholder="Sort by" />
@@ -141,32 +141,32 @@ export default function BookList() {
           </Select>
         </div>
 
-        {loading ? (
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-16 rounded-lg bg-muted animate-pulse"
-              />
-            ))}
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-16">
+        {loading ?
+        <div className="space-y-3">
+            {[1, 2, 3].map((i) =>
+          <div
+            key={i}
+            className="h-16 rounded-lg bg-muted animate-pulse" />
+
+          )}
+          </div> :
+        filtered.length === 0 ?
+        <div className="text-center py-16">
             <p className="text-muted-foreground font-body text-lg">
-              {statusFilter !== "all"
-                ? `No ${statusLabels[statusFilter]?.toLowerCase()} books yet.`
-                : "No books added yet. Start by adding your first book!"}
+              {statusFilter !== "all" ?
+            `No ${statusLabels[statusFilter]?.toLowerCase()} books yet.` :
+            "No books added yet. Start by adding your first book!"}
             </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto rounded-lg border border-border bg-card">
+          </div> :
+
+        <div className="overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-muted/50">
-                  <th onClick={() => toggleSort("title")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
+                  <th onClick={() => toggleSort("title")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-accent">
                     <span className="inline-flex items-center">Title<SortIcon columnKey="title" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
-                  <th onClick={() => toggleSort("author")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors">
+                  <th onClick={() => toggleSort("author")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent">
                     <span className="inline-flex items-center">Author<SortIcon columnKey="author" sortKey={sortKey} sortDir={sortDir} /></span>
                   </th>
                   <th onClick={() => toggleSort("status")} className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
@@ -184,14 +184,14 @@ export default function BookList() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((book) => (
-                  <tr
-                    key={book.id}
-                    onClick={() =>
-                      navigate(`/app/${token}/books/${book.id}`)
-                    }
-                    className="border-b border-border last:border-0 hover:bg-muted/30 cursor-pointer transition-colors"
-                  >
+                {filtered.map((book) =>
+              <tr
+                key={book.id}
+                onClick={() =>
+                navigate(`/app/${token}/books/${book.id}`)
+                }
+                className="border-b border-border last:border-0 hover:bg-muted/30 cursor-pointer transition-colors">
+                
                     <td className="px-4 py-3">
                       <div className="font-display font-bold text-foreground">
                         {book.title}
@@ -207,9 +207,9 @@ export default function BookList() {
                       <StatusBadge status={book.status} />
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden md:table-cell">
-                      {book.meeting_date
-                        ? format(new Date(book.meeting_date + "T00:00:00"), "MMM d, yyyy")
-                        : "—"}
+                      {book.meeting_date ?
+                  format(new Date(book.meeting_date + "T00:00:00"), "MMM d, yyyy") :
+                  "—"}
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}
@@ -218,12 +218,12 @@ export default function BookList() {
                       {book.page_count}
                     </td>
                   </tr>
-                ))}
+              )}
               </tbody>
             </table>
           </div>
-        )}
+        }
       </div>
-    </AppLayout>
-  );
+    </AppLayout>);
+
 }
