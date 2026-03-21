@@ -292,7 +292,7 @@ export default function Members() {
           </div>
         )}
 
-        {isAdminMode && adminMember && members.filter((m) => m.role !== "admin").length > 0 && (
+        {isAdmin && adminMember && members.filter((m) => m.role !== "admin").length > 0 && (
           <div className="rounded-lg border border-border bg-card p-5 space-y-4">
             <h2 className="font-display text-lg font-bold text-foreground">
               Transfer Admin Role
