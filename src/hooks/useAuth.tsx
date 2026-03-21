@@ -77,6 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { error: "No member found with that email address." };
     }
     localStorage.setItem(STORAGE_KEY, email.trim().toLowerCase());
+    updateActivity();
     setMember(m);
     return {};
   };
