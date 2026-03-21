@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
