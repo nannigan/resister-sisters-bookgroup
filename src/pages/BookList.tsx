@@ -117,17 +117,6 @@ export default function BookList() {
             </SelectContent>
           </Select>
 
-          <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
-            <SelectTrigger className="w-[180px] font-body">
-              <ArrowUpDown className="h-3.5 w-3.5 mr-1.5" />
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="created_at">Recently Added</SelectItem>
-              <SelectItem value="title">Title</SelectItem>
-              <SelectItem value="meeting_date">Meeting Date</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
 
         {loading ? (
