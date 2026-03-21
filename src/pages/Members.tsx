@@ -146,10 +146,10 @@ export default function Members() {
             </Button>
             <Dialog open={addOpen} onOpenChange={setAddOpen}>
               <DialogTrigger asChild>
-                <Button size="sm" className="font-body">
+                <MovingBorderButton containerClassName="h-9" className="font-body text-sm px-3">
                   <Plus className="h-4 w-4 mr-1.5" />
                   Add Member
-                </Button>
+                </MovingBorderButton>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
