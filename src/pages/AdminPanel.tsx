@@ -25,7 +25,9 @@ export default function AdminPanel() {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const { regenerateToken } = useAppSettings();
+  const { votes, clearAllVotes } = useVotes();
   const [regenerating, setRegenerating] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const currentUrl =
