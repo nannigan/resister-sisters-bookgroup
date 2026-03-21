@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBooks, Book } from "@/hooks/useBooks";
 import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
