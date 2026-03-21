@@ -152,7 +152,7 @@ export default function BookDetail() {
         <div className="flex items-center justify-between">
           <Button
             variant="ghost"
-            onClick={() => navigate(`/app/${token}`)}
+            onClick={() => navigate("/books")}
             className="font-body"
           >
             <ArrowLeft className="h-4 w-4 mr-1.5" />

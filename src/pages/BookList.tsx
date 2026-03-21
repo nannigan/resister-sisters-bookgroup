@@ -197,7 +197,7 @@ export default function BookList() {
                 {filtered.map((book) => (
                   <tr
                     key={book.id}
-                    onClick={() => navigate(`/app/${token}/books/${book.id}`)}
+                    onClick={() => navigate(`/books/${book.id}`)}
                     className="border-b border-border last:border-0 hover:bg-muted/30 cursor-pointer transition-colors"
                   >
                     <td className="px-4 py-3">

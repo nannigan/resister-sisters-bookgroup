@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
