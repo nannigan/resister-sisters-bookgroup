@@ -135,15 +135,14 @@ export default function Members() {
             Members
           </h1>
           <div className="flex items-center gap-2">
-            <Button
-              variant={isAdminMode ? "default" : "outline"}
-              size="sm"
+            <MovingBorderButton
+              containerClassName="h-9"
               onClick={() => setIsAdminMode(!isAdminMode)}
-              className="font-body"
+              className="font-body text-sm px-3"
             >
               <UserCog className="h-4 w-4 mr-1.5" />
               {isAdminMode ? "Admin Mode On" : "Admin Mode"}
-            </Button>
+            </MovingBorderButton>
             <Dialog open={addOpen} onOpenChange={setAddOpen}>
               <DialogTrigger asChild>
                 <MovingBorderButton containerClassName="h-9" className="font-body text-sm px-3">
