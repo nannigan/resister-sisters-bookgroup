@@ -118,7 +118,7 @@ export default function BookDetail() {
         toast.error("Failed to update book.");
       } else {
         toast.success("Book updated!");
-        navigate(`/app/${token}`);
+        navigate("/books");
       }
     }
     setSaving(false);
