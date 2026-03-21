@@ -19,18 +19,33 @@ export type Database = {
           access_token: string
           created_at: string
           id: string
+          theme_accent: string
+          theme_background: string
+          theme_card: string
+          theme_foreground: string
+          theme_primary: string
           updated_at: string
         }
         Insert: {
           access_token: string
           created_at?: string
           id?: string
+          theme_accent?: string
+          theme_background?: string
+          theme_card?: string
+          theme_foreground?: string
+          theme_primary?: string
           updated_at?: string
         }
         Update: {
           access_token?: string
           created_at?: string
           id?: string
+          theme_accent?: string
+          theme_background?: string
+          theme_card?: string
+          theme_foreground?: string
+          theme_primary?: string
           updated_at?: string
         }
         Relationships: []
