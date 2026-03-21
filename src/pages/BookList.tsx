@@ -19,7 +19,7 @@ type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "
 type SortDir = "asc" | "desc";
 
 const statusLabels: Record<string, string> = {
-  candidate: "Candidate",
+  candidate: "Suggested",
   current: "Currently Reading",
   finished: "Finished"
 };
