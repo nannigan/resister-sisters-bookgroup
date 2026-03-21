@@ -22,6 +22,8 @@ export type Database = {
           theme_accent: string
           theme_background: string
           theme_card: string
+          theme_font_body: string
+          theme_font_display: string
           theme_foreground: string
           theme_primary: string
           updated_at: string
@@ -33,6 +35,8 @@ export type Database = {
           theme_accent?: string
           theme_background?: string
           theme_card?: string
+          theme_font_body?: string
+          theme_font_display?: string
           theme_foreground?: string
           theme_primary?: string
           updated_at?: string
@@ -44,6 +48,8 @@ export type Database = {
           theme_accent?: string
           theme_background?: string
           theme_card?: string
+          theme_font_body?: string
+          theme_font_display?: string
           theme_foreground?: string
           theme_primary?: string
           updated_at?: string
