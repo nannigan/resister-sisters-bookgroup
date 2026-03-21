@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -8,6 +8,8 @@ export interface ThemeColors {
   theme_accent: string;
   theme_card: string;
   theme_foreground: string;
+  theme_font_display: string;
+  theme_font_body: string;
 }
 
 const DEFAULT_THEME: ThemeColors = {
@@ -16,6 +18,8 @@ const DEFAULT_THEME: ThemeColors = {
   theme_accent: "166 76% 96%",
   theme_card: "0 0% 98%",
   theme_foreground: "0 0% 9%",
+  theme_font_display: "Libre Baskerville",
+  theme_font_body: "Source Sans 3",
 };
 
 export function useThemeSettings() {
@@ -26,7 +30,7 @@ export function useThemeSettings() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("app_settings")
-        .select("theme_primary, theme_background, theme_accent, theme_card, theme_foreground")
+        .select("theme_primary, theme_background, theme_accent, theme_card, theme_foreground, theme_font_display, theme_font_body")
         .limit(1)
         .single();
       if (error || !data) return DEFAULT_THEME;
