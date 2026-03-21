@@ -36,7 +36,7 @@ import {
 import { toast } from "sonner";
 
 export default function BookDetail() {
-  const { token, bookId } = useParams<{ token: string; bookId: string }>();
+  const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
   const { addBook, updateBook, deleteBook, getBook } = useBooks();
   const isNew = bookId === "new";
