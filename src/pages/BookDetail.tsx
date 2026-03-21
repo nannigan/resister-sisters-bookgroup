@@ -162,10 +162,10 @@ export default function BookDetail() {
           {!isNew && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm" className="font-body">
+                <MovingBorderButton containerClassName="h-9" className="font-body text-destructive text-sm px-3">
                   <Trash2 className="h-4 w-4 mr-1.5" />
                   Delete
-                </Button>
+                </MovingBorderButton>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
