@@ -130,7 +130,7 @@ export default function BookDetail() {
       toast.error("Failed to delete book.");
     } else {
       toast.success("Book deleted.");
-      navigate(`/app/${token}`);
+      navigate("/books");
     }
   };
 
