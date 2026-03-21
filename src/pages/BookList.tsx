@@ -38,7 +38,6 @@ function SortIcon({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKey
 }
 
 export default function BookList() {
-  const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
