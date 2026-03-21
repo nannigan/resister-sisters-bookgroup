@@ -151,14 +151,14 @@ export default function BookDetail() {
     <AppLayout>
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
-          <Button
-            variant="ghost"
+          <MovingBorderButton
+            containerClassName="h-10"
             onClick={() => navigate(`/app/${token}`)}
             className="font-body"
           >
             <ArrowLeft className="h-4 w-4 mr-1.5" />
             Back to list
-          </Button>
+          </MovingBorderButton>
           {!isNew && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
