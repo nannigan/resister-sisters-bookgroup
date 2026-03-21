@@ -280,10 +280,10 @@ export default function BookDetail() {
               <Label className="font-body font-semibold">Meeting Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
+                  <MovingBorderButton
+                    containerClassName="w-full h-10"
                     className={cn(
-                      "w-full justify-start text-left font-body",
+                      "justify-start text-left font-body",
                       !form.meeting_date && "text-muted-foreground"
                     )}
                   >
@@ -291,7 +291,7 @@ export default function BookDetail() {
                     {form.meeting_date
                       ? format(new Date(form.meeting_date + "T00:00:00"), "PPP")
                       : "Pick a date"}
-                  </Button>
+                  </MovingBorderButton>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
