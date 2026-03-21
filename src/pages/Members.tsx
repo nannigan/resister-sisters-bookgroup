@@ -130,16 +130,7 @@ export default function Members() {
           <h1 className="font-display text-2xl font-bold text-foreground">
             Members
           </h1>
-          <div className="flex items-center gap-2">
-            <Button
-              variant={isAdminMode ? "default" : "outline"}
-              size="sm"
-              onClick={() => setIsAdminMode(!isAdminMode)}
-              className="font-body"
-            >
-              <UserCog className="h-4 w-4 mr-1.5" />
-              {isAdminMode ? "Admin Mode On" : "Admin Mode"}
-            </Button>
+          {isAdmin && (
             <Dialog open={addOpen} onOpenChange={setAddOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" className="font-body">
@@ -199,7 +190,7 @@ export default function Members() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-          </div>
+          )}
         </div>
 
         {loading ? (
