@@ -119,7 +119,7 @@ export default function BookList() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="candidate">Candidate</SelectItem>
+              <SelectItem value="candidate">Suggested</SelectItem>
               <SelectItem value="current">Currently Reading</SelectItem>
               <SelectItem value="finished">Finished</SelectItem>
             </SelectContent>
