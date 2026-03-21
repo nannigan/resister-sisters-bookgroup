@@ -1,5 +1,5 @@
 import { Link, useParams, useLocation } from "react-router-dom";
-import { BookOpen, Users, Settings } from "lucide-react";
+import { BookOpen, Users, Settings, Vote } from "lucide-react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { token } = useParams<{ token: string }>();
@@ -8,6 +8,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { to: base, label: "Books", icon: BookOpen, exact: true },
+    { to: `${base}/vote`, label: "Vote", icon: Vote },
     { to: `${base}/members`, label: "Members", icon: Users },
     { to: `${base}/admin`, label: "Admin", icon: Settings },
   ];
