@@ -264,13 +264,12 @@ export default function Members() {
                   {isAdminMode && member.role !== "admin" && (
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                        <MovingBorderButton
+                          containerClassName="h-8 w-8"
+                          className="text-destructive hover:text-destructive"
                         >
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </MovingBorderButton>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
