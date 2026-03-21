@@ -97,7 +97,7 @@ export default function BookList() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
-          <Button onClick={() => navigate(`/app/${token}/books/new`)} className="font-body">
+          <Button onClick={() => navigate("/books/new")} className="font-body">
             <Plus className="h-4 w-4 mr-1.5" />
             Add Book
           </Button>
