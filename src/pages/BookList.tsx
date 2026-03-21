@@ -19,7 +19,7 @@ type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "
 type SortDir = "asc" | "desc";
 
 const statusLabels: Record<string, string> = {
-  candidate: "Candidate",
+  candidate: "Suggested",
   current: "Currently Reading",
   finished: "Finished"
 };
@@ -119,7 +119,7 @@ export default function BookList() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="candidate">Candidate</SelectItem>
+              <SelectItem value="candidate">Suggested</SelectItem>
               <SelectItem value="current">Currently Reading</SelectItem>
               <SelectItem value="finished">Finished</SelectItem>
             </SelectContent>
