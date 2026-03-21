@@ -37,7 +37,6 @@ import { toast } from "sonner";
 import { Member } from "@/hooks/useMembers";
 
 export default function Members() {
-  const { token } = useParams<{ token: string }>();
   const { members, loading, addMember, updateMember, deleteMember, transferAdmin, adminMember } =
     useMembers();
 
