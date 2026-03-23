@@ -209,6 +209,15 @@ export default function BookList() {
                     </span>
                   </th>
                   <th
+                    onClick={() => toggleSort("category")}
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                  >
+                    <span className="inline-flex items-center">
+                      Category
+                      <SortIcon columnKey="category" sortKey={sortKey} sortDir={sortDir} />
+                    </span>
+                  </th>
+                  <th
                     onClick={() => toggleSort("meeting_date")}
                     className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
                   >
