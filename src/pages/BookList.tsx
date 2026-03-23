@@ -247,7 +247,6 @@ export default function BookList() {
                         </>
                       ) : "—"}
                     </td>
-                    </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}
                     </td>
