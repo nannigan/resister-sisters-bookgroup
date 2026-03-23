@@ -109,6 +109,12 @@ export default function BookList() {
               <div className="font-body text-sm text-foreground">
                 <span className="font-semibold">Next Meeting:</span>{" "}
                 {format(new Date(next.meeting_date! + "T00:00:00"), "EEEE, MMMM d, yyyy")}
+                {next.meeting_time && (() => {
+                  const [h, m] = next.meeting_time.split(":").map(Number);
+                  const d = new Date();
+                  d.setHours(h, m);
+                  return <span className="ml-1">at {format(d, "h:mm a")} PT</span>;
+                })()}
                 <span className="text-muted-foreground ml-2">— {next.title}</span>
               </div>
             </div>

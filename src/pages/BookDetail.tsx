@@ -312,6 +312,20 @@ export default function BookDetail() {
               </Popover>
             </div>
             <div className="space-y-2">
+              <Label className="font-body font-semibold">Meeting Time (PT)</Label>
+              <Input
+                type="time"
+                value={form.meeting_time}
+                onChange={(e) =>
+                  setForm({ ...form, meeting_time: e.target.value })
+                }
+                className="font-body"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
               <Label className="font-body font-semibold">Nominator</Label>
               <Input
                 value={form.nominator}
