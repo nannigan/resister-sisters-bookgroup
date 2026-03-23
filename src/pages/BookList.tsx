@@ -9,7 +9,8 @@ import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { format } from "date-fns";
 
 type StatusFilter = "all" | "candidate" | "current" | "finished";
-type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "nominator" | "page_count";
+type CategoryFilter = "all" | "political" | "fun";
+type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "category" | "nominator" | "page_count";
 type SortDir = "asc" | "desc";
 
 const statusLabels: Record<string, string> = {
