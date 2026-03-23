@@ -99,6 +99,7 @@ export default function BookDetail() {
       title: form.title.trim(),
       author: form.author.trim(),
       status: form.status,
+      category: form.category,
       publication_date: form.publication_date,
       page_count: pageCount,
       meeting_date: form.meeting_date || null,
