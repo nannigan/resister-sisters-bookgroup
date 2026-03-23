@@ -59,6 +59,9 @@ export default function BookList() {
     if (statusFilter !== "all") {
       result = result.filter((b) => b.status === statusFilter);
     }
+    if (categoryFilter !== "all") {
+      result = result.filter((b) => b.category === categoryFilter);
+    }
     result.sort((a, b) => {
       let cmp = 0;
       const dir = sortDir === "asc" ? 1 : -1;
