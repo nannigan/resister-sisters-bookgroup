@@ -48,6 +48,7 @@ export default function BookDetail() {
     publication_date: "",
     page_count: "",
     meeting_date: "",
+    meeting_time: "",
     nominator: "",
     brief_summary: "",
     comment: "",
