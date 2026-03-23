@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import SuggestTopicDialog from "@/components/SuggestTopicDialog";
 import { format } from "date-fns";
 
 type StatusFilter = "all" | "candidate" | "current" | "finished";
