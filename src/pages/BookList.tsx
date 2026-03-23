@@ -235,7 +235,17 @@ export default function BookList() {
                       <StatusBadge status={book.status} />
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden md:table-cell">
-                      {book.meeting_date ? format(new Date(book.meeting_date + "T00:00:00"), "MMM d, yyyy") : "—"}
+                      {book.meeting_date ? (
+                        <>
+                          {format(new Date(book.meeting_date + "T00:00:00"), "MMM d, yyyy")}
+                          {book.meeting_time && (() => {
+                            const [h, m] = book.meeting_time.split(":").map(Number);
+                            const d = new Date();
+                            d.setHours(h, m);
+                            return <span className="ml-1 text-foreground/70">{format(d, "h:mm a")}</span>;
+                          })()}
+                        </>
+                      ) : "—"}
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}
