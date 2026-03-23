@@ -261,6 +261,9 @@ export default function BookList() {
                     <td className="px-4 py-3">
                       <StatusBadge status={book.status} />
                     </td>
+                    <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden sm:table-cell capitalize">
+                      {book.category}
+                    </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden md:table-cell">
                       {book.meeting_date ? (
                         <>
@@ -273,9 +276,6 @@ export default function BookList() {
                           })()}
                         </>
                       ) : "—"}
-                    </td>
-                    <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden sm:table-cell capitalize">
-                      {book.category}
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}
