@@ -45,6 +45,7 @@ export default function BookDetail() {
     title: "",
     author: "",
     status: "candidate" as "candidate" | "current" | "finished",
+    category: "political" as "political" | "fun",
     publication_date: "",
     page_count: "",
     meeting_date: "",
