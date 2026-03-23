@@ -228,7 +228,7 @@ export default function BookDetail() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-4">
             <div className="space-y-2">
               <Label className="font-body font-semibold">
                 Status <span className="text-destructive">*</span>
@@ -246,6 +246,25 @@ export default function BookDetail() {
                   <SelectItem value="candidate">Suggested</SelectItem>
                   <SelectItem value="current">Currently Reading</SelectItem>
                   <SelectItem value="finished">Finished</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">
+                Category <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={form.category}
+                onValueChange={(v) =>
+                  setForm({ ...form, category: v as "political" | "fun" })
+                }
+              >
+                <SelectTrigger className="font-body">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="political">Political</SelectItem>
+                  <SelectItem value="fun">Fun</SelectItem>
                 </SelectContent>
               </Select>
             </div>

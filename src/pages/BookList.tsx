@@ -98,7 +98,7 @@ export default function BookList() {
       return cmp * dir;
     });
     return result;
-  }, [books, statusFilter, sortKey, sortDir]);
+  }, [books, statusFilter, categoryFilter, sortKey, sortDir]);
 
   return (
     <AppLayout>

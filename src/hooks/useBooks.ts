@@ -6,6 +6,7 @@ export interface Book {
   title: string;
   author: string;
   status: "candidate" | "current" | "finished";
+  category: "political" | "fun";
   publication_date: string;
   page_count: number;
   meeting_date: string | null;
