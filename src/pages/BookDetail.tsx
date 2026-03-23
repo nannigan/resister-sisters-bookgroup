@@ -68,6 +68,7 @@ export default function BookDetail() {
             publication_date: data.publication_date,
             page_count: String(data.page_count),
             meeting_date: data.meeting_date || "",
+            meeting_time: data.meeting_time || "",
             nominator: data.nominator || "",
             brief_summary: data.brief_summary || "",
             comment: data.comment || "",
