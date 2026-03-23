@@ -9,7 +9,8 @@ import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { format } from "date-fns";
 
 type StatusFilter = "all" | "candidate" | "current" | "finished";
-type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "nominator" | "page_count";
+type CategoryFilter = "all" | "political" | "fun";
+type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "category" | "nominator" | "page_count";
 type SortDir = "asc" | "desc";
 
 const statusLabels: Record<string, string> = {
@@ -41,6 +42,7 @@ export default function BookList() {
   const navigate = useNavigate();
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
@@ -49,13 +51,16 @@ export default function BookList() {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
       setSortKey(key);
-      setSortDir(key === "title" || key === "author" || key === "nominator" ? "asc" : "desc");
+      setSortDir(key === "title" || key === "author" || key === "nominator" || key === "category" ? "asc" : "desc");
     }
   };
   const filtered = useMemo(() => {
     let result = [...books];
     if (statusFilter !== "all") {
       result = result.filter((b) => b.status === statusFilter);
+    }
+    if (categoryFilter !== "all") {
+      result = result.filter((b) => b.category === categoryFilter);
     }
     result.sort((a, b) => {
       let cmp = 0;
@@ -76,6 +81,9 @@ export default function BookList() {
         case "nominator":
           cmp = (a.nominator || "").localeCompare(b.nominator || "");
           break;
+        case "category":
+          cmp = a.category.localeCompare(b.category);
+          break;
         case "page_count":
           cmp = a.page_count - b.page_count;
           break;
@@ -90,7 +98,7 @@ export default function BookList() {
       return cmp * dir;
     });
     return result;
-  }, [books, statusFilter, sortKey, sortDir]);
+  }, [books, statusFilter, categoryFilter, sortKey, sortDir]);
 
   return (
     <AppLayout>
@@ -141,6 +149,16 @@ export default function BookList() {
               <SelectItem value="finished">Finished</SelectItem>
             </SelectContent>
           </Select>
+          <Select value={categoryFilter} onValueChange={(v) => setCategoryFilter(v as CategoryFilter)}>
+            <SelectTrigger className="w-[180px] font-body">
+              <SelectValue placeholder="Filter by category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="political">Political</SelectItem>
+              <SelectItem value="fun">Fun</SelectItem>
+            </SelectContent>
+          </Select>
 
         </div>
 
@@ -188,6 +206,15 @@ export default function BookList() {
                     <span className="inline-flex items-center">
                       Status
                       <SortIcon columnKey="status" sortKey={sortKey} sortDir={sortDir} />
+                    </span>
+                  </th>
+                  <th
+                    onClick={() => toggleSort("category")}
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                  >
+                    <span className="inline-flex items-center">
+                      Category
+                      <SortIcon columnKey="category" sortKey={sortKey} sortDir={sortDir} />
                     </span>
                   </th>
                   <th
@@ -246,6 +273,9 @@ export default function BookList() {
                           })()}
                         </>
                       ) : "—"}
+                    </td>
+                    <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden sm:table-cell capitalize">
+                      {book.category}
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}

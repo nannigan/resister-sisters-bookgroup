@@ -45,6 +45,7 @@ export default function BookDetail() {
     title: "",
     author: "",
     status: "candidate" as "candidate" | "current" | "finished",
+    category: "political" as "political" | "fun",
     publication_date: "",
     page_count: "",
     meeting_date: "",
@@ -65,6 +66,7 @@ export default function BookDetail() {
             title: data.title,
             author: data.author,
             status: data.status,
+            category: data.category,
             publication_date: data.publication_date,
             page_count: String(data.page_count),
             meeting_date: data.meeting_date || "",
@@ -97,6 +99,7 @@ export default function BookDetail() {
       title: form.title.trim(),
       author: form.author.trim(),
       status: form.status,
+      category: form.category,
       publication_date: form.publication_date,
       page_count: pageCount,
       meeting_date: form.meeting_date || null,
@@ -225,7 +228,7 @@ export default function BookDetail() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-4">
             <div className="space-y-2">
               <Label className="font-body font-semibold">
                 Status <span className="text-destructive">*</span>
@@ -243,6 +246,25 @@ export default function BookDetail() {
                   <SelectItem value="candidate">Suggested</SelectItem>
                   <SelectItem value="current">Currently Reading</SelectItem>
                   <SelectItem value="finished">Finished</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">
+                Category <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={form.category}
+                onValueChange={(v) =>
+                  setForm({ ...form, category: v as "political" | "fun" })
+                }
+              >
+                <SelectTrigger className="font-body">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="political">Political</SelectItem>
+                  <SelectItem value="fun">Fun</SelectItem>
                 </SelectContent>
               </Select>
             </div>
