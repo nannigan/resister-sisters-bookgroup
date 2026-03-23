@@ -313,14 +313,72 @@ export default function BookDetail() {
             </div>
             <div className="space-y-2">
               <Label className="font-body font-semibold">Meeting Time (PT)</Label>
-              <Input
-                type="time"
-                value={form.meeting_time}
-                onChange={(e) =>
-                  setForm({ ...form, meeting_time: e.target.value })
-                }
-                className="font-body"
-              />
+              <div className="flex gap-2">
+                <Select
+                  value={(() => {
+                    if (!form.meeting_time) return "";
+                    const [h] = form.meeting_time.split(":").map(Number);
+                    return String(((h % 12) || 12));
+                  })()}
+                  onValueChange={(hour) => {
+                    const [h, m] = (form.meeting_time || "12:00").split(":").map(Number);
+                    const isPM = h >= 12;
+                    let newH = parseInt(hour);
+                    if (isPM && newH !== 12) newH += 12;
+                    if (!isPM && newH === 12) newH = 0;
+                    setForm({ ...form, meeting_time: `${String(newH).padStart(2, "0")}:${String(m).padStart(2, "0")}` });
+                  }}
+                >
+                  <SelectTrigger className="font-body w-[80px]">
+                    <SelectValue placeholder="Hr" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
+                      <SelectItem key={h} value={String(h)}>{h}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={(() => {
+                    if (!form.meeting_time) return "";
+                    return form.meeting_time.split(":")[1];
+                  })()}
+                  onValueChange={(minute) => {
+                    const [h] = (form.meeting_time || "12:00").split(":").map(Number);
+                    setForm({ ...form, meeting_time: `${String(h).padStart(2, "0")}:${minute}` });
+                  }}
+                >
+                  <SelectTrigger className="font-body w-[80px]">
+                    <SelectValue placeholder="Min" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {["00", "15", "30", "45"].map((m) => (
+                      <SelectItem key={m} value={m}>{m}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={(() => {
+                    if (!form.meeting_time) return "";
+                    const [h] = form.meeting_time.split(":").map(Number);
+                    return h >= 12 ? "PM" : "AM";
+                  })()}
+                  onValueChange={(ampm) => {
+                    const [h, m] = (form.meeting_time || "12:00").split(":").map(Number);
+                    const hour12 = (h % 12) || 12;
+                    const newH = ampm === "PM" ? (hour12 === 12 ? 12 : hour12 + 12) : (hour12 === 12 ? 0 : hour12);
+                    setForm({ ...form, meeting_time: `${String(newH).padStart(2, "0")}:${String(m).padStart(2, "0")}` });
+                  }}
+                >
+                  <SelectTrigger className="font-body w-[80px]">
+                    <SelectValue placeholder="AM/PM" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="AM">AM</SelectItem>
+                    <SelectItem value="PM">PM</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
 
