@@ -51,7 +51,7 @@ export default function BookList() {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
       setSortKey(key);
-      setSortDir(key === "title" || key === "author" || key === "nominator" ? "asc" : "desc");
+      setSortDir(key === "title" || key === "author" || key === "nominator" || key === "category" ? "asc" : "desc");
     }
   };
   const filtered = useMemo(() => {
