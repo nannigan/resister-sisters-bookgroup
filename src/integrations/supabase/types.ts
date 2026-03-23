@@ -63,6 +63,7 @@ export type Database = {
         Row: {
           author: string
           brief_summary: string | null
+          category: Database["public"]["Enums"]["book_category"]
           comment: string | null
           created_at: string
           id: string
@@ -79,6 +80,7 @@ export type Database = {
         Insert: {
           author: string
           brief_summary?: string | null
+          category?: Database["public"]["Enums"]["book_category"]
           comment?: string | null
           created_at?: string
           id?: string
@@ -95,6 +97,7 @@ export type Database = {
         Update: {
           author?: string
           brief_summary?: string | null
+          category?: Database["public"]["Enums"]["book_category"]
           comment?: string | null
           created_at?: string
           id?: string
@@ -184,6 +187,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      book_category: "political" | "fun"
       book_status: "candidate" | "current" | "finished"
       member_role: "admin" | "member"
     }
@@ -313,6 +317,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      book_category: ["political", "fun"],
       book_status: ["candidate", "current", "finished"],
       member_role: ["admin", "member"],
     },
