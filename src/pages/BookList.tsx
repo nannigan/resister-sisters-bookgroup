@@ -95,6 +95,26 @@ export default function BookList() {
   return (
     <AppLayout>
       <div className="space-y-6">
+        {(() => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const upcoming = books
+            .filter((b) => b.meeting_date && new Date(b.meeting_date + "T00:00:00") >= today)
+            .sort((a, b) => a.meeting_date!.localeCompare(b.meeting_date!));
+          const next = upcoming[0];
+          if (!next) return null;
+          return (
+            <div className="flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3">
+              <span className="text-primary font-display font-bold text-lg">📅</span>
+              <div className="font-body text-sm text-foreground">
+                <span className="font-semibold">Next Meeting:</span>{" "}
+                {format(new Date(next.meeting_date! + "T00:00:00"), "EEEE, MMMM d, yyyy")}
+                <span className="text-muted-foreground ml-2">— {next.title}</span>
+              </div>
+            </div>
+          );
+        })()}
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
           <Button onClick={() => navigate("/books/new")} className="font-body">
