@@ -48,6 +48,7 @@ export default function BookDetail() {
     publication_date: "",
     page_count: "",
     meeting_date: "",
+    meeting_time: "",
     nominator: "",
     brief_summary: "",
     comment: "",
@@ -67,6 +68,7 @@ export default function BookDetail() {
             publication_date: data.publication_date,
             page_count: String(data.page_count),
             meeting_date: data.meeting_date || "",
+            meeting_time: data.meeting_time || "",
             nominator: data.nominator || "",
             brief_summary: data.brief_summary || "",
             comment: data.comment || "",
@@ -98,6 +100,7 @@ export default function BookDetail() {
       publication_date: form.publication_date,
       page_count: pageCount,
       meeting_date: form.meeting_date || null,
+      meeting_time: form.meeting_time || null,
       nominator: form.nominator || null,
       brief_summary: form.brief_summary || null,
       comment: form.comment || null,
@@ -308,6 +311,20 @@ export default function BookDetail() {
                 </PopoverContent>
               </Popover>
             </div>
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">Meeting Time (PT)</Label>
+              <Input
+                type="time"
+                value={form.meeting_time}
+                onChange={(e) =>
+                  setForm({ ...form, meeting_time: e.target.value })
+                }
+                className="font-body"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label className="font-body font-semibold">Nominator</Label>
               <Input

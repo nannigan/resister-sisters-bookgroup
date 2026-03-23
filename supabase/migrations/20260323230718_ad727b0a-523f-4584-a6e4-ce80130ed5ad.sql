@@ -1,0 +1,1 @@
+ALTER TABLE public.books ADD COLUMN meeting_time text DEFAULT NULL;

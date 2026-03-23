@@ -9,6 +9,7 @@ export interface Book {
   publication_date: string;
   page_count: number;
   meeting_date: string | null;
+  meeting_time: string | null;
   brief_summary: string | null;
   nominator: string | null;
   comment: string | null;
