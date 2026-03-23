@@ -81,6 +81,9 @@ export default function BookList() {
         case "nominator":
           cmp = (a.nominator || "").localeCompare(b.nominator || "");
           break;
+        case "category":
+          cmp = a.category.localeCompare(b.category);
+          break;
         case "page_count":
           cmp = a.page_count - b.page_count;
           break;
