@@ -66,6 +66,7 @@ export default function BookDetail() {
             title: data.title,
             author: data.author,
             status: data.status,
+            category: data.category,
             publication_date: data.publication_date,
             page_count: String(data.page_count),
             meeting_date: data.meeting_date || "",
