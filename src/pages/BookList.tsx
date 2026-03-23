@@ -274,6 +274,9 @@ export default function BookList() {
                         </>
                       ) : "—"}
                     </td>
+                    <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden sm:table-cell capitalize">
+                      {book.category}
+                    </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden lg:table-cell">
                       {book.nominator || "—"}
                     </td>
