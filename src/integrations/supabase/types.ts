@@ -68,6 +68,7 @@ export type Database = {
           id: string
           link: string | null
           meeting_date: string | null
+          meeting_time: string | null
           nominator: string | null
           page_count: number
           publication_date: string
@@ -83,6 +84,7 @@ export type Database = {
           id?: string
           link?: string | null
           meeting_date?: string | null
+          meeting_time?: string | null
           nominator?: string | null
           page_count: number
           publication_date: string
@@ -98,6 +100,7 @@ export type Database = {
           id?: string
           link?: string | null
           meeting_date?: string | null
+          meeting_time?: string | null
           nominator?: string | null
           page_count?: number
           publication_date?: string
