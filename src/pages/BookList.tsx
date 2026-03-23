@@ -42,6 +42,7 @@ export default function BookList() {
   const navigate = useNavigate();
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
