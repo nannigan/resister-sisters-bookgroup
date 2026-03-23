@@ -149,6 +149,16 @@ export default function BookList() {
               <SelectItem value="finished">Finished</SelectItem>
             </SelectContent>
           </Select>
+          <Select value={categoryFilter} onValueChange={(v) => setCategoryFilter(v as CategoryFilter)}>
+            <SelectTrigger className="w-[180px] font-body">
+              <SelectValue placeholder="Filter by category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="political">Political</SelectItem>
+              <SelectItem value="fun">Fun</SelectItem>
+            </SelectContent>
+          </Select>
 
         </div>
 
