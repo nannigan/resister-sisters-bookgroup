@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Lightbulb } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 interface SuggestTopicDialogProps {
   editTopic?: { id: string; title: string } | null;
@@ -15,6 +16,7 @@ interface SuggestTopicDialogProps {
 }
 
 export default function SuggestTopicDialog({ editTopic, open: controlledOpen, onOpenChange, onSaved, trigger }: SuggestTopicDialogProps) {
+  const { member } = useAuth();
   const [internalOpen, setInternalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [topic, setTopic] = useState("");
@@ -46,7 +48,7 @@ export default function SuggestTopicDialog({ editTopic, open: controlledOpen, on
       }
       toast.success("Topic updated!");
     } else {
-      const { error } = await supabase.from("topics").insert({ title: topic.trim() });
+      const { error } = await supabase.from("topics").insert({ title: topic.trim(), submitted_by: member?.name ?? null });
       setSubmitting(false);
       if (error) {
         toast.error("Failed to submit topic.");
