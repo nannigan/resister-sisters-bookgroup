@@ -70,16 +70,14 @@ export default function Topics() {
                   <span className="font-body text-xs text-muted-foreground whitespace-nowrap">
                     {format(new Date(topic.created_at), "MMM d, yyyy")}
                   </span>
-                  {canEdit(topic) && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                      onClick={() => setEditTopic(topic)}
-                    >
-                      <Pencil className="h-3.5 w-3.5" />
-                    </Button>
-                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    onClick={() => setEditTopic(topic)}
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                  </Button>
                 </div>
               </div>
             ))}
