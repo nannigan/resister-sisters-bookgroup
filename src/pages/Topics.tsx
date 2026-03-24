@@ -15,9 +15,13 @@ interface Topic {
 }
 
 export default function Topics() {
+  const { member } = useAuth();
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [editTopic, setEditTopic] = useState<Topic | null>(null);
+
+  const canEdit = (topic: Topic) =>
+    member?.role === "admin" || (topic.submitted_by && topic.submitted_by === member?.name);
 
   const fetchTopics = useCallback(() => {
     supabase
