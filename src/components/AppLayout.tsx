@@ -32,6 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <span className="font-display text-lg font-bold text-foreground">Resister Sisters Book Group</span>
           </Link>
           <div className="flex items-center gap-1">
+            <GlobalSearch />
             <nav className="flex items-center gap-1">
               {navItems.map((item) => {
                 const active = isActive(item.to, (item as any).exact);
