@@ -16,6 +16,7 @@ import {
 interface Topic {
   id: string;
   title: string;
+  description: string | null;
   created_at: string;
   submitted_by: string | null;
 }
