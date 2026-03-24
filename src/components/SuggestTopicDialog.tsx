@@ -40,6 +40,7 @@ export default function SuggestTopicDialog() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="font-display">Suggest a Topic for Brainstorming New Books</DialogTitle>
+          <p className="text-sm text-muted-foreground font-body">Share an idea for the group to explore.</p>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           <Textarea
