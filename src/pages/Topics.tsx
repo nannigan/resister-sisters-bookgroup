@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SuggestTopicDialog from "@/components/SuggestTopicDialog";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Topic {
   id: string;
