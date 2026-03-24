@@ -10,6 +10,7 @@ interface Topic {
   id: string;
   title: string;
   created_at: string;
+  submitted_by: string | null;
 }
 
 export default function Topics() {
