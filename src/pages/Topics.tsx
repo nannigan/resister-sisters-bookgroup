@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SuggestTopicDialog from "@/components/SuggestTopicDialog";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Topic {
   id: string;
@@ -14,9 +15,13 @@ interface Topic {
 }
 
 export default function Topics() {
+  const { member } = useAuth();
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [editTopic, setEditTopic] = useState<Topic | null>(null);
+
+  const canEdit = (topic: Topic) =>
+    member?.role === "admin" || (topic.submitted_by && topic.submitted_by === member?.name);
 
   const fetchTopics = useCallback(() => {
     supabase
@@ -69,14 +74,16 @@ export default function Topics() {
                   <span className="font-body text-xs text-muted-foreground whitespace-nowrap">
                     {format(new Date(topic.created_at), "MMM d, yyyy")}
                   </span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                    onClick={() => setEditTopic(topic)}
-                  >
-                    <Pencil className="h-3.5 w-3.5" />
-                  </Button>
+                  {canEdit(topic) && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      onClick={() => setEditTopic(topic)}
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
                 </div>
               </div>
             ))}
