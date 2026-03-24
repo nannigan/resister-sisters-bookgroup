@@ -57,7 +57,14 @@ export default function Topics() {
                 key={topic.id}
                 className="rounded-lg border border-border bg-card px-4 py-3 flex items-center justify-between"
               >
-                <span className="font-body text-foreground">{topic.title}</span>
+                <div>
+                  <span className="font-body text-foreground">{topic.title}</span>
+                  {topic.submitted_by && (
+                    <span className="font-body text-xs text-muted-foreground ml-2">
+                      — {topic.submitted_by}
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-3 ml-4">
                   <span className="font-body text-xs text-muted-foreground whitespace-nowrap">
                     {format(new Date(topic.created_at), "MMM d, yyyy")}
