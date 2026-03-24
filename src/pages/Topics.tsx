@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import AppLayout from "@/components/AppLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
+import { Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import SuggestTopicDialog from "@/components/SuggestTopicDialog";
 
 interface Topic {
   id: string;
@@ -12,8 +15,9 @@ interface Topic {
 export default function Topics() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editTopic, setEditTopic] = useState<Topic | null>(null);
 
-  useEffect(() => {
+  const fetchTopics = useCallback(() => {
     supabase
       .from("topics")
       .select("id, title, created_at")
@@ -23,6 +27,10 @@ export default function Topics() {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    fetchTopics();
+  }, [fetchTopics]);
 
   return (
     <AppLayout>
@@ -49,14 +57,32 @@ export default function Topics() {
                 className="rounded-lg border border-border bg-card px-4 py-3 flex items-center justify-between"
               >
                 <span className="font-body text-foreground">{topic.title}</span>
-                <span className="font-body text-xs text-muted-foreground whitespace-nowrap ml-4">
-                  {format(new Date(topic.created_at), "MMM d, yyyy")}
-                </span>
+                <div className="flex items-center gap-3 ml-4">
+                  <span className="font-body text-xs text-muted-foreground whitespace-nowrap">
+                    {format(new Date(topic.created_at), "MMM d, yyyy")}
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    onClick={() => setEditTopic(topic)}
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      <SuggestTopicDialog
+        editTopic={editTopic}
+        open={!!editTopic}
+        onOpenChange={(open) => { if (!open) setEditTopic(null); }}
+        onSaved={fetchTopics}
+        trigger={null}
+      />
     </AppLayout>
   );
 }

@@ -1,0 +1,1 @@
+CREATE POLICY "Allow all update on topics" ON public.topics FOR UPDATE TO anon USING (true) WITH CHECK (true);
