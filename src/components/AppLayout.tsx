@@ -9,6 +9,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { to: "/books", label: "Books", icon: BookOpen, exact: false },
+    { to: "/topics", label: "Topics", icon: Lightbulb },
     { to: "/vote", label: "Vote", icon: Vote },
     { to: "/members", label: "Members", icon: Users },
     ...(member?.role === "admin"
