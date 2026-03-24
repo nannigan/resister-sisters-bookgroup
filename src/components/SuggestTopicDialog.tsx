@@ -16,6 +16,7 @@ interface SuggestTopicDialogProps {
 }
 
 export default function SuggestTopicDialog({ editTopic, open: controlledOpen, onOpenChange, onSaved, trigger }: SuggestTopicDialogProps) {
+  const { member } = useAuth();
   const [internalOpen, setInternalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [topic, setTopic] = useState("");
