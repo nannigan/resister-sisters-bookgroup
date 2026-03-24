@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { BookOpen, Users, Settings, Vote, LogOut, Lightbulb } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import GlobalSearch from "@/components/GlobalSearch";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -31,6 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <span className="font-display text-lg font-bold text-foreground">Resister Sisters Book Group</span>
           </Link>
           <div className="flex items-center gap-1">
+            <GlobalSearch />
             <nav className="flex items-center gap-1">
               {navItems.map((item) => {
                 const active = isActive(item.to, (item as any).exact);
