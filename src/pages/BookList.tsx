@@ -5,7 +5,9 @@ import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus, ArrowUpDown, ArrowUp, ArrowDown, Download } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import SuggestTopicDialog from "@/components/SuggestTopicDialog";
 import { format } from "date-fns";
 
@@ -133,6 +135,38 @@ export default function BookList() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
           <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                const doc = new jsPDF({ orientation: "landscape" });
+                doc.setFontSize(16);
+                doc.text("Resister Sisters Books", 14, 15);
+                doc.setFontSize(9);
+                doc.text(`Generated ${new Date().toLocaleDateString()}`, 14, 21);
+                autoTable(doc, {
+                  startY: 26,
+                  head: [["Title", "Author", "Status", "Category", "Meeting Date", "Nominator", "Pages"]],
+                  body: filtered.map((b) => [
+                    b.title,
+                    b.author,
+                    statusLabels[b.status] || b.status,
+                    b.category.charAt(0).toUpperCase() + b.category.slice(1),
+                    b.meeting_date
+                      ? format(new Date(b.meeting_date + "T00:00:00"), "MMM d, yyyy")
+                      : "—",
+                    b.nominator || "—",
+                    String(b.page_count),
+                  ]),
+                  styles: { fontSize: 8 },
+                  headStyles: { fillColor: [60, 60, 60] },
+                });
+                doc.save("resister-sisters-books.pdf");
+              }}
+              className="font-body"
+            >
+              <Download className="h-4 w-4 mr-1.5" />
+              PDF
+            </Button>
             <SuggestTopicDialog />
             <Button onClick={() => navigate("/books/new")} className="font-body">
               <Plus className="h-4 w-4 mr-1.5" />
