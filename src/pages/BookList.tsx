@@ -5,7 +5,9 @@ import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus, ArrowUpDown, ArrowUp, ArrowDown, Download } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import SuggestTopicDialog from "@/components/SuggestTopicDialog";
 import { format } from "date-fns";
 
