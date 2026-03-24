@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Users, Settings, Vote, LogOut } from "lucide-react";
+import { BookOpen, Users, Settings, Vote, LogOut, Lightbulb } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
@@ -9,6 +9,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { to: "/books", label: "Books", icon: BookOpen, exact: false },
+    { to: "/topics", label: "Topics", icon: Lightbulb },
     { to: "/vote", label: "Vote", icon: Vote },
     { to: "/members", label: "Members", icon: Users },
     ...(member?.role === "admin"

@@ -13,6 +13,7 @@ import BookDetail from "./pages/BookDetail";
 import Members from "./pages/Members";
 import AdminPanel from "./pages/AdminPanel";
 import Vote from "./pages/Vote";
+import Topics from "./pages/Topics";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
               <Route element={<RequireAuth />}>
                 <Route path="/books" element={<BookList />} />
                 <Route path="/books/:bookId" element={<BookDetail />} />
+                <Route path="/topics" element={<Topics />} />
                 <Route path="/vote" element={<Vote />} />
                 <Route path="/members" element={<Members />} />
                 <Route path="/admin" element={<AdminPanel />} />
