@@ -24,6 +24,9 @@ export default function Topics() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [editTopic, setEditTopic] = useState<Topic | null>(null);
+  const [deleteTopic, setDeleteTopic] = useState<Topic | null>(null);
+  const { member } = useAuth();
+  const isAdmin = member?.role === "admin";
 
   const fetchTopics = useCallback(() => {
     supabase
@@ -39,6 +42,18 @@ export default function Topics() {
   useEffect(() => {
     fetchTopics();
   }, [fetchTopics]);
+
+  const handleDelete = async () => {
+    if (!deleteTopic) return;
+    const { error } = await supabase.from("topics").delete().eq("id", deleteTopic.id);
+    if (error) {
+      toast.error("Failed to delete topic.");
+    } else {
+      toast.success("Topic deleted.");
+      fetchTopics();
+    }
+    setDeleteTopic(null);
+  };
 
   return (
     <AppLayout>
@@ -84,6 +99,16 @@ export default function Topics() {
                   >
                     <Pencil className="h-3.5 w-3.5" />
                   </Button>
+                  {isAdmin && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                      onClick={() => setDeleteTopic(topic)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
                 </div>
               </div>
             ))}
@@ -98,6 +123,23 @@ export default function Topics() {
         onSaved={fetchTopics}
         trigger={null}
       />
+
+      <AlertDialog open={!!deleteTopic} onOpenChange={(open) => { if (!open) setDeleteTopic(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Topic</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{deleteTopic?.title}"? This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppLayout>
   );
 }
