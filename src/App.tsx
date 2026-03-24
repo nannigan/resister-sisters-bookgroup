@@ -13,6 +13,7 @@ import BookDetail from "./pages/BookDetail";
 import Members from "./pages/Members";
 import AdminPanel from "./pages/AdminPanel";
 import Vote from "./pages/Vote";
+import Topics from "./pages/Topics";
 
 const queryClient = new QueryClient();
 
