@@ -1,25 +1,15 @@
 
 
-## Add "Brief Summary" Column to Books Table
+## Plan: Store `submitted_by` when suggesting a topic
 
-### What Changes
+**What changes**: When a user submits a new topic, automatically save the logged-in member's name in the `submitted_by` column of the `topics` table.
 
-1. **Database migration**: Add a nullable `brief_summary` text column to the `books` table (positioned logically before `comment` in the schema).
+### Steps
 
-2. **BookDetail.tsx**: Add a "Brief Summary" textarea field between the Link field and Group Notes field. Include it in the form state, data loading, and save logic.
+1. **Edit `src/components/SuggestTopicDialog.tsx`**:
+   - Import `useAuth` hook
+   - Get `member` from the auth context
+   - On insert, include `submitted_by: member?.name ?? null` in the insert payload
 
-3. **useBooks.ts**: Add `brief_summary` to the `Book` interface and `BookInsert` type.
-
-4. **BookList.tsx**: No changes needed (brief summary doesn't need to appear in the table list view).
-
-### Technical Details
-
-- **Migration SQL**: `ALTER TABLE public.books ADD COLUMN brief_summary text;`
-- **Form field**: Textarea with placeholder like "A brief summary of the book…", max ~500 characters
-- **Hook update**: Add `brief_summary: string | null` to the Book interface
-
-**Files modified:** 
-- New migration file (schema change)
-- `src/hooks/useBooks.ts` (interface update)
-- `src/pages/BookDetail.tsx` (form field + state)
+That's it — the `submitted_by` column already exists and is nullable, and the auth context already provides the member's name. No database changes needed.
 
