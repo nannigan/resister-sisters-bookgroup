@@ -104,7 +104,7 @@ export default function SuggestTopicDialog({ editTopic, open: controlledOpen, on
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="topic-description" className="font-body">Description <span className="text-muted-foreground">(optional)</span></Label>
+            <Label htmlFor="topic-description" className="font-body">Description</Label>
             <Textarea
               id="topic-description"
               placeholder="Add more detail about what you'd like the group to explore"
