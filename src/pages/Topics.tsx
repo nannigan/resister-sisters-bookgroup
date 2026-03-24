@@ -32,7 +32,7 @@ export default function Topics() {
   const fetchTopics = useCallback(() => {
     supabase
       .from("topics")
-      .select("id, title, created_at, submitted_by")
+      .select("id, title, description, created_at, submitted_by")
       .order("created_at", { ascending: false })
       .then(({ data }) => {
         setTopics(data || []);
