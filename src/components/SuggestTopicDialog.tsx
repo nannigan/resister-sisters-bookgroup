@@ -48,7 +48,7 @@ export default function SuggestTopicDialog({ editTopic, open: controlledOpen, on
       }
       toast.success("Topic updated!");
     } else {
-      const { error } = await supabase.from("topics").insert({ title: topic.trim() });
+      const { error } = await supabase.from("topics").insert({ title: topic.trim(), submitted_by: member?.name ?? null });
       setSubmitting(false);
       if (error) {
         toast.error("Failed to submit topic.");
