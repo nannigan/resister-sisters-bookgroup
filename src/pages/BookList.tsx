@@ -141,11 +141,12 @@ export default function BookList() {
                 const doc = new jsPDF({ orientation: "portrait" });
                 doc.setFontSize(12);
                 doc.setFont("helvetica", "normal");
-                doc.text("Resister Sisters Books", 14, 12);
+                doc.text("Resister Sisters Books", 8, 10);
                 doc.setFontSize(8);
-                doc.text(`Generated ${new Date().toLocaleDateString()}`, 14, 17);
+                doc.text(`Generated ${new Date().toLocaleDateString()}`, 8, 14);
                 autoTable(doc, {
-                  startY: 20,
+                  startY: 17,
+                  margin: { top: 8, right: 8, bottom: 8, left: 8 },
                   head: [["Title", "Author", "Status", "Category", "Meeting Date", "Nominator", "Pages"]],
                   body: filtered.map((b) => [
                     b.title,
@@ -158,7 +159,7 @@ export default function BookList() {
                     b.nominator || "—",
                     String(b.page_count),
                   ]),
-                  styles: { fontSize: 7 },
+                  styles: { fontSize: 7, cellPadding: 1.5 },
                   headStyles: { fillColor: [60, 60, 60], fontStyle: "normal", cellPadding: 1.5 },
                 });
                 doc.save("resister-sisters-books.pdf");
