@@ -122,7 +122,7 @@ export default function GlobalSearch() {
             setOpen(true);
           }}
           onFocus={() => { if (query.trim()) setOpen(true); }}
-          className="h-8 w-40 sm:w-52 pl-8 pr-8 text-sm font-body bg-muted/50 border-border"
+          className="h-8 w-40 sm:w-52 pl-8 pr-8 text-sm font-body border-border"
         />
         {query && (
           <button
