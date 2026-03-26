@@ -291,7 +291,7 @@ export default function BookList() {
                   <tr
                     key={book.id}
                     onClick={() => navigate(`/books/${book.id}`)}
-                    className="border-b border-border last:border-0 hover:bg-muted/30 cursor-pointer transition-colors"
+                    className="border-b border-border last:border-0 hover:bg-amber-50 cursor-pointer transition-colors"
                   >
                     <td className="px-4 py-3">
                       <div className="font-display font-bold text-foreground">{book.title}</div>
