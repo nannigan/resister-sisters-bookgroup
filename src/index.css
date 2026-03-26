@@ -146,7 +146,8 @@
 
 @layer components {
   .status-badge-candidate {
-    @apply bg-amber-50 !text-blue-700 border-amber-200;
+    @apply bg-amber-50 border-amber-200;
+    color: #3693ab !important;
   }
   .status-badge-current {
     @apply bg-amber-50 !text-emerald-700 border-amber-200;
