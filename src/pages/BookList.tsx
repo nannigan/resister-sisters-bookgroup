@@ -220,7 +220,7 @@ export default function BookList() {
           <div className="overflow-x-auto rounded-lg border border-border bg-card">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-border bg-muted/50">
+                <tr className="border-b border-border bg-amber-50">
                   <th
                     onClick={() => toggleSort("title")}
                     className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
