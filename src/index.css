@@ -146,12 +146,12 @@
 
 @layer components {
   .status-badge-candidate {
-    @apply bg-accent/15 text-accent-foreground border-accent/30;
+    @apply bg-blue-50 text-blue-700 border-blue-200;
   }
   .status-badge-current {
-    @apply bg-primary/15 text-primary border-primary/30;
+    @apply bg-emerald-50 text-emerald-700 border-emerald-200;
   }
   .status-badge-finished {
-    @apply bg-amber-50 text-muted-foreground border-border;
+    @apply bg-amber-50 text-amber-700 border-amber-200;
   }
 }
