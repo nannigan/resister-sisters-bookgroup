@@ -223,7 +223,7 @@ export default function BookList() {
                 <tr className="border-b border-border bg-amber-50">
                   <th
                     onClick={() => toggleSort("title")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Title
@@ -232,7 +232,7 @@ export default function BookList() {
                   </th>
                   <th
                     onClick={() => toggleSort("author")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Author
@@ -241,7 +241,7 @@ export default function BookList() {
                   </th>
                   <th
                     onClick={() => toggleSort("status")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Status
@@ -250,7 +250,7 @@ export default function BookList() {
                   </th>
                   <th
                     onClick={() => toggleSort("category")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden sm:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Category
@@ -259,7 +259,7 @@ export default function BookList() {
                   </th>
                   <th
                     onClick={() => toggleSort("meeting_date")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden md:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Meeting Date
@@ -268,7 +268,7 @@ export default function BookList() {
                   </th>
                   <th
                     onClick={() => toggleSort("nominator")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Nominator
@@ -277,7 +277,7 @@ export default function BookList() {
                   </th>
                   <th
                     onClick={() => toggleSort("page_count")}
-                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-accent"
+                    className="text-left px-4 py-3 font-body font-semibold text-sm text-muted-foreground hidden lg:table-cell cursor-pointer select-none hover:text-foreground transition-colors bg-amber-50"
                   >
                     <span className="inline-flex items-center">
                       Pages
