@@ -154,6 +154,7 @@
     color: #617b56 !important;
   }
   .status-badge-finished {
-    @apply bg-amber-50 !text-amber-700 border-amber-200;
+    @apply bg-amber-50 border-amber-200;
+    color: #d6e6ea !important;
   }
 }
