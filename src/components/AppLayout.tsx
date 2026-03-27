@@ -43,7 +43,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium font-body transition-colors ${
                       active
                         ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        : "text-muted-foreground hover:text-foreground hover:bg-amber-50"
                     }`}
                   >
                     <item.icon className="h-4 w-4" />
