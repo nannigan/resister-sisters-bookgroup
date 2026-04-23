@@ -17,19 +17,21 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2, Mail } from "lucide-react";
 import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function AdminPanel() {
   const { votes, clearAllVotes } = useVotes();
   const { members, adminMember } = useMembers();
   const [clearing, setClearing] = useState(false);
+  const [recipientMode, setRecipientMode] = useState<"bcc" | "cc">("bcc");
 
   const recipients = members.filter(
     (m) => m.email && m.id !== adminMember?.id,
   );
-  const bccList = recipients.map((m) => m.email).join(",");
-  const mailtoHref = adminMember?.email
-    ? `mailto:${encodeURIComponent(adminMember.email)}?bcc=${encodeURIComponent(bccList)}`
-    : `mailto:?bcc=${encodeURIComponent(bccList)}`;
+  const recipientList = recipients.map((m) => m.email).join(",");
+  const toPart = adminMember?.email ? encodeURIComponent(adminMember.email) : "";
+  const mailtoHref = `mailto:${toPart}?${recipientMode}=${encodeURIComponent(recipientList)}`;
 
   const handleEmailAll = () => {
     if (recipients.length === 0) {
@@ -55,10 +57,28 @@ export default function AdminPanel() {
                   Email All Members
                 </h3>
                 <p className="text-sm text-muted-foreground font-body">
-                  Opens your email app with all members{adminMember ? " (except you)" : ""} in BCC. You send from your own inbox.
+                  Opens your email app with all members{adminMember ? " (except you)" : ""} in {recipientMode.toUpperCase()}. You send from your own inbox.
                 </p>
               </div>
             </div>
+            <RadioGroup
+              value={recipientMode}
+              onValueChange={(v) => setRecipientMode(v as "bcc" | "cc")}
+              className="flex gap-4 pl-7"
+            >
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="bcc" id="mode-bcc" />
+                <Label htmlFor="mode-bcc" className="font-body text-sm cursor-pointer">
+                  BCC <span className="text-muted-foreground">(private)</span>
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="cc" id="mode-cc" />
+                <Label htmlFor="mode-cc" className="font-body text-sm cursor-pointer">
+                  CC <span className="text-muted-foreground">(visible, reply-all)</span>
+                </Label>
+              </div>
+            </RadioGroup>
             <Button
               variant="outline"
               onClick={handleEmailAll}
