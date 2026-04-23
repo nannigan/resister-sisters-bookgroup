@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useVotes } from "@/hooks/useVotes";
+import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import ThemeConfigurator from "@/components/ThemeConfigurator";
 import { Button } from "@/components/ui/button";
@@ -14,12 +15,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Trash2 } from "lucide-react";
+import { Trash2, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AdminPanel() {
   const { votes, clearAllVotes } = useVotes();
+  const { members, adminMember } = useMembers();
   const [clearing, setClearing] = useState(false);
+
+  const recipients = members.filter(
+    (m) => m.email && m.id !== adminMember?.id,
+  );
+  const bccList = recipients.map((m) => m.email).join(",");
+  const mailtoHref = adminMember?.email
+    ? `mailto:${encodeURIComponent(adminMember.email)}?bcc=${encodeURIComponent(bccList)}`
+    : `mailto:?bcc=${encodeURIComponent(bccList)}`;
+
+  const handleEmailAll = () => {
+    if (recipients.length === 0) {
+      toast.error("No members with email addresses to message.");
+      return;
+    }
+    window.location.href = mailtoHref;
+  };
 
   return (
     <AppLayout>
@@ -27,6 +45,31 @@ export default function AdminPanel() {
         <h1 className="font-display text-2xl font-bold text-foreground">
           Admin Panel
         </h1>
+
+        <div className="rounded-lg border border-border bg-card p-6 space-y-5">
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
+              <Mail className="h-5 w-5 text-foreground shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-body font-semibold text-foreground">
+                  Email All Members
+                </h3>
+                <p className="text-sm text-muted-foreground font-body">
+                  Opens your email app with all members{adminMember ? " (except you)" : ""} in BCC. You send from your own inbox.
+                </p>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              onClick={handleEmailAll}
+              disabled={recipients.length === 0}
+              className="font-body bg-amber-50"
+            >
+              <Mail className="h-4 w-4 mr-1.5" />
+              Compose Email ({recipients.length} recipient{recipients.length !== 1 ? "s" : ""})
+            </Button>
+          </div>
+        </div>
 
         <div className="rounded-lg border border-border bg-card p-6 space-y-5">
           <div className="space-y-3">
