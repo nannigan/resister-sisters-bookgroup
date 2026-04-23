@@ -47,7 +47,7 @@ export default function BookDetail() {
   const [form, setForm] = useState({
     title: "",
     author: "",
-    status: "candidate" as "candidate" | "current" | "finished",
+    status: "candidate" as "candidate" | "current" | "finished" | "previously_suggested",
     category: "political" as "political" | "fun",
     publication_date: "",
     page_count: "",
@@ -243,16 +243,17 @@ export default function BookDetail() {
               <Select
                 value={form.status}
                 onValueChange={(v) =>
-                  setForm({ ...form, status: v as "candidate" | "current" | "finished" })
+                  setForm({ ...form, status: v as "candidate" | "current" | "finished" | "previously_suggested" })
                 }
               >
                 <SelectTrigger className="font-body">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="candidate">Suggested</SelectItem>
+                  <SelectItem value="candidate">Currently Suggested</SelectItem>
                   <SelectItem value="current">Currently Reading</SelectItem>
                   <SelectItem value="finished">Finished</SelectItem>
+                  <SelectItem value="previously_suggested">Previously Suggested</SelectItem>
                 </SelectContent>
               </Select>
             </div>

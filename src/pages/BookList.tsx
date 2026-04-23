@@ -11,15 +11,16 @@ import autoTable from "jspdf-autotable";
 import SuggestTopicDialog from "@/components/SuggestTopicDialog";
 import { format } from "date-fns";
 
-type StatusFilter = "all" | "candidate" | "current" | "finished";
+type StatusFilter = "all" | "candidate" | "current" | "finished" | "previously_suggested";
 type CategoryFilter = "all" | "political" | "fun";
 type SortKey = "meeting_date" | "title" | "created_at" | "author" | "status" | "category" | "nominator" | "page_count";
 type SortDir = "asc" | "desc";
 
 const statusLabels: Record<string, string> = {
-  candidate: "Suggested",
+  candidate: "Currently Suggested",
   current: "Currently Reading",
   finished: "Finished",
+  previously_suggested: "Previously Suggested",
 };
 
 function StatusBadge({ status }: { status: string }) {
@@ -28,7 +29,9 @@ function StatusBadge({ status }: { status: string }) {
       ? "status-badge-candidate"
       : status === "current"
         ? "status-badge-current"
-        : "status-badge-finished";
+        : status === "previously_suggested"
+          ? "status-badge-previously-suggested"
+          : "status-badge-finished";
   return (
     <Badge variant="outline" className={`${cls} font-body text-xs`}>
       {statusLabels[status]}
@@ -184,9 +187,10 @@ export default function BookList() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="candidate">Suggested</SelectItem>
+              <SelectItem value="candidate">Currently Suggested</SelectItem>
               <SelectItem value="current">Currently Reading</SelectItem>
               <SelectItem value="finished">Finished</SelectItem>
+              <SelectItem value="previously_suggested">Previously Suggested</SelectItem>
             </SelectContent>
           </Select>
           <Select value={categoryFilter} onValueChange={(v) => setCategoryFilter(v as CategoryFilter)}>
