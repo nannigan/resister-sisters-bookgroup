@@ -34,11 +34,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function BookDetail() {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
   const { addBook, updateBook, deleteBook, getBook } = useBooks();
+  const { member } = useAuth();
+  const isAdmin = member?.role === "admin";
   const isNew = bookId === "new";
 
   const [form, setForm] = useState({
@@ -131,6 +134,10 @@ export default function BookDetail() {
   };
 
   const handleDelete = async () => {
+    if (!isAdmin) {
+      toast.error("Only admins can delete books.");
+      return;
+    }
     const { error } = await deleteBook(bookId!);
     if (error) {
       toast.error("Failed to delete book.");
@@ -164,7 +171,7 @@ export default function BookDetail() {
             <ArrowLeft className="h-4 w-4 mr-1.5" />
             Back to list
           </Button>
-          {!isNew && (
+          {!isNew && isAdmin && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" size="sm" className="font-body">
