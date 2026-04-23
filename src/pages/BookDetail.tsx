@@ -308,14 +308,23 @@ export default function BookDetail() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label className="font-body font-semibold">Meeting Date</Label>
+              <Label className="font-body font-semibold">
+                Meeting Date
+                {!isAdmin && (
+                  <span className="ml-2 text-xs font-normal text-muted-foreground">
+                    (admin only)
+                  </span>
+                )}
+              </Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
+                    disabled={!isAdmin}
                     className={cn(
                       "w-full justify-start text-left font-body",
-                      !form.meeting_date && "text-muted-foreground"
+                      !form.meeting_date && "text-muted-foreground",
+                      !isAdmin && "opacity-60 cursor-not-allowed"
                     )}
                   >
                     <CalendarIcon className="h-4 w-4 mr-2" />
