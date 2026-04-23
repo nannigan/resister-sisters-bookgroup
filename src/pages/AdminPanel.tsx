@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useVotes } from "@/hooks/useVotes";
+import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import ThemeConfigurator from "@/components/ThemeConfigurator";
 import { Button } from "@/components/ui/button";
@@ -14,12 +15,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Trash2 } from "lucide-react";
+import { Trash2, Mail } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AdminPanel() {
   const { votes, clearAllVotes } = useVotes();
+  const { members, adminMember } = useMembers();
   const [clearing, setClearing] = useState(false);
+
+  const recipients = members.filter(
+    (m) => m.email && m.id !== adminMember?.id,
+  );
+  const bccList = recipients.map((m) => m.email).join(",");
+  const mailtoHref = adminMember?.email
+    ? `mailto:${encodeURIComponent(adminMember.email)}?bcc=${encodeURIComponent(bccList)}`
+    : `mailto:?bcc=${encodeURIComponent(bccList)}`;
+
+  const handleEmailAll = () => {
+    if (recipients.length === 0) {
+      toast.error("No members with email addresses to message.");
+      return;
+    }
+    window.location.href = mailtoHref;
+  };
 
   return (
     <AppLayout>
