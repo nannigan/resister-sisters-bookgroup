@@ -5,7 +5,7 @@ export interface Book {
   id: string;
   title: string;
   author: string;
-  status: "candidate" | "current" | "finished";
+  status: "candidate" | "current" | "finished" | "previously_suggested";
   category: "political" | "fun";
   publication_date: string;
   page_count: number;
