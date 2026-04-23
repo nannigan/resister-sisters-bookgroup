@@ -17,6 +17,12 @@ export default function Vote() {
 
   const [selectedMember, setSelectedMember] = useState<string>("");
   const [rankings, setRankings] = useState<string[]>([]); // ordered array of book IDs
+  const [submitting, setSubmitting] = useState(false);
+
+  const hasVoted = useMemo(
+    () => (selectedMember ? getMemberVotes(selectedMember).length > 0 : false),
+    [selectedMember, votes, getMemberVotes]
+  );
 
   const candidateBooks = useMemo(
     () => books.filter((b) => b.status === "candidate"),
@@ -59,6 +65,8 @@ export default function Vote() {
 
   const handleSubmit = async () => {
     if (!selectedMember) return;
+    if (hasVoted) return;
+    setSubmitting(true);
     const ballot = rankings.map((bookId, i) => ({ bookId, rank: i + 1 }));
     const { error } = await submitBallot(selectedMember, ballot);
     if (error) {
@@ -66,6 +74,7 @@ export default function Vote() {
     } else {
       toast.success("Vote submitted!");
     }
+    setSubmitting(false);
   };
 
   // Results: ranked by points
