@@ -157,4 +157,8 @@
     @apply bg-amber-50 border-amber-200;
     color: #8ba8b0 !important;
   }
+  .status-badge-previously-suggested {
+    @apply bg-amber-50 border-amber-200;
+    color: #a07c4a !important;
+  }
 }

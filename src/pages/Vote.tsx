@@ -109,7 +109,7 @@ export default function Vote() {
           <h1 className="font-display text-2xl font-bold text-foreground">Vote</h1>
           <Card className="p-8 text-center">
             <p className="font-body text-muted-foreground">
-              No suggested books to vote on. Add some books with "Suggested" status first.
+              No suggested books to vote on. Add some books with "Currently Suggested" status first.
             </p>
           </Card>
         </div>
