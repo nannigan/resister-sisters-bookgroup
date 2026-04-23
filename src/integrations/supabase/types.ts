@@ -212,7 +212,7 @@ export type Database = {
     }
     Enums: {
       book_category: "political" | "fun"
-      book_status: "candidate" | "current" | "finished"
+      book_status: "candidate" | "current" | "finished" | "previously_suggested"
       member_role: "admin" | "member"
     }
     CompositeTypes: {
@@ -342,7 +342,7 @@ export const Constants = {
   public: {
     Enums: {
       book_category: ["political", "fun"],
-      book_status: ["candidate", "current", "finished"],
+      book_status: ["candidate", "current", "finished", "previously_suggested"],
       member_role: ["admin", "member"],
     },
   },
