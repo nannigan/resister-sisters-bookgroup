@@ -17,6 +17,12 @@ export default function Vote() {
 
   const [selectedMember, setSelectedMember] = useState<string>("");
   const [rankings, setRankings] = useState<string[]>([]); // ordered array of book IDs
+  const [submitting, setSubmitting] = useState(false);
+
+  const hasVoted = useMemo(
+    () => (selectedMember ? getMemberVotes(selectedMember).length > 0 : false),
+    [selectedMember, votes, getMemberVotes]
+  );
 
   const candidateBooks = useMemo(
     () => books.filter((b) => b.status === "candidate"),
@@ -59,6 +65,8 @@ export default function Vote() {
 
   const handleSubmit = async () => {
     if (!selectedMember) return;
+    if (hasVoted) return;
+    setSubmitting(true);
     const ballot = rankings.map((bookId, i) => ({ bookId, rank: i + 1 }));
     const { error } = await submitBallot(selectedMember, ballot);
     if (error) {
@@ -66,6 +74,7 @@ export default function Vote() {
     } else {
       toast.success("Vote submitted!");
     }
+    setSubmitting(false);
   };
 
   // Results: ranked by points
@@ -141,7 +150,9 @@ export default function Vote() {
           {selectedMember && (
             <>
               <p className="font-body text-sm text-muted-foreground">
-                Rank the books from most preferred (#1) to least. Use the arrows to reorder.
+                {hasVoted
+                  ? "You've already cast your vote. Your ranking is shown below."
+                  : "Rank the books from most preferred (#1) to least. Use the arrows to reorder."}
               </p>
               <div className="space-y-2">
                 {rankings.map((bookId, index) => {
@@ -166,14 +177,14 @@ export default function Vote() {
                       <div className="flex flex-col gap-0.5">
                         <button
                           onClick={() => moveUp(index)}
-                          disabled={index === 0}
+                          disabled={index === 0 || hasVoted}
                           className="p-1 rounded hover:bg-accent disabled:opacity-30 text-foreground"
                         >
                           <ChevronUp className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => moveDown(index)}
-                          disabled={index === rankings.length - 1}
+                          disabled={index === rankings.length - 1 || hasVoted}
                           className="p-1 rounded hover:bg-accent disabled:opacity-30 text-foreground"
                         >
                           <ChevronDown className="h-4 w-4" />
@@ -183,8 +194,12 @@ export default function Vote() {
                   );
                 })}
               </div>
-              <Button onClick={handleSubmit} className="mt-2">
-                Submit Vote
+              <Button
+                onClick={handleSubmit}
+                className="mt-2"
+                disabled={hasVoted || submitting}
+              >
+                {hasVoted ? "Vote Already Submitted" : submitting ? "Submitting..." : "Submit Vote"}
               </Button>
             </>
           )}
