@@ -49,6 +49,31 @@ export default function AdminPanel() {
         <div className="rounded-lg border border-border bg-card p-6 space-y-5">
           <div className="space-y-3">
             <div className="flex items-start gap-2">
+              <Mail className="h-5 w-5 text-foreground shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-body font-semibold text-foreground">
+                  Email All Members
+                </h3>
+                <p className="text-sm text-muted-foreground font-body">
+                  Opens your email app with all members{adminMember ? " (except you)" : ""} in BCC. You send from your own inbox.
+                </p>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              onClick={handleEmailAll}
+              disabled={recipients.length === 0}
+              className="font-body bg-amber-50"
+            >
+              <Mail className="h-4 w-4 mr-1.5" />
+              Compose Email ({recipients.length} recipient{recipients.length !== 1 ? "s" : ""})
+            </Button>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-border bg-card p-6 space-y-5">
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
               <Trash2 className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-body font-semibold text-foreground">
