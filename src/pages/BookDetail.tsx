@@ -467,7 +467,7 @@ export default function BookDetail() {
               onChange={(e) => setForm({ ...form, brief_summary: e.target.value })}
               placeholder="A brief summary of the book…"
               className="font-body min-h-[80px]"
-              maxLength={500}
+              maxLength={2000}
             />
           </div>
 
