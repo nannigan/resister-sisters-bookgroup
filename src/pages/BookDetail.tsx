@@ -464,7 +464,7 @@ export default function BookDetail() {
             </div>
             <div className="space-y-2">
               <Label className="font-body font-semibold">Library Availability</Label>
-              <div className="flex items-center gap-2 h-10 px-3 rounded-md border border-input bg-background">
+              <div className="flex items-center gap-2 h-10 px-3 rounded-md border border-input bg-amber-50">
                 <Checkbox
                   id="library_available"
                   checked={form.library_available}
