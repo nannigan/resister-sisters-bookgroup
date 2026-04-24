@@ -66,7 +66,9 @@ export type Database = {
           category: Database["public"]["Enums"]["book_category"]
           comment: string | null
           created_at: string
+          format: string | null
           id: string
+          library_available: boolean
           link: string | null
           meeting_date: string | null
           meeting_time: string | null
@@ -83,7 +85,9 @@ export type Database = {
           category?: Database["public"]["Enums"]["book_category"]
           comment?: string | null
           created_at?: string
+          format?: string | null
           id?: string
+          library_available?: boolean
           link?: string | null
           meeting_date?: string | null
           meeting_time?: string | null
@@ -100,7 +104,9 @@ export type Database = {
           category?: Database["public"]["Enums"]["book_category"]
           comment?: string | null
           created_at?: string
+          format?: string | null
           id?: string
+          library_available?: boolean
           link?: string | null
           meeting_date?: string | null
           meeting_time?: string | null

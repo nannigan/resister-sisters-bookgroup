@@ -15,6 +15,8 @@ export interface Book {
   nominator: string | null;
   comment: string | null;
   link: string | null;
+  format: "hardcover" | "paperback" | null;
+  library_available: boolean;
   created_at: string;
   updated_at: string;
 }
