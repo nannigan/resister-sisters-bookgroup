@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -57,6 +58,8 @@ export default function BookDetail() {
     brief_summary: "",
     comment: "",
     link: "",
+    format: "" as "" | "hardcover" | "paperback",
+    library_available: false,
   });
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
@@ -78,6 +81,8 @@ export default function BookDetail() {
             brief_summary: data.brief_summary || "",
             comment: data.comment || "",
             link: data.link || "",
+          format: (data.format as "hardcover" | "paperback" | null) || "",
+          library_available: data.library_available ?? false,
           });
         }
         setLoading(false);
@@ -111,6 +116,8 @@ export default function BookDetail() {
       brief_summary: form.brief_summary || null,
       comment: form.comment || null,
       link: form.link || null,
+      format: form.format || null,
+      library_available: form.library_available,
     };
 
     if (isNew) {
@@ -433,6 +440,42 @@ export default function BookDetail() {
                 className="font-body"
                 maxLength={100}
               />
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">Format</Label>
+              <Select
+                value={form.format || "none"}
+                onValueChange={(v) =>
+                  setForm({ ...form, format: v === "none" ? "" : (v as "hardcover" | "paperback") })
+                }
+              >
+                <SelectTrigger className="font-body">
+                  <SelectValue placeholder="Select format" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">—</SelectItem>
+                  <SelectItem value="hardcover">Hardcover</SelectItem>
+                  <SelectItem value="paperback">Paperback</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="font-body font-semibold">Library Availability</Label>
+              <div className="flex items-center gap-2 h-10 px-3 rounded-md border border-input bg-background">
+                <Checkbox
+                  id="library_available"
+                  checked={form.library_available}
+                  onCheckedChange={(checked) =>
+                    setForm({ ...form, library_available: checked === true })
+                  }
+                />
+                <Label htmlFor="library_available" className="font-body cursor-pointer">
+                  BPL or OPL available
+                </Label>
+              </div>
             </div>
           </div>
 
