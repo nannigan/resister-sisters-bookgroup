@@ -334,7 +334,6 @@ export default function BookList() {
                         <StatusBadge status={book.status} />
                       </button>
                     </td>
-                    </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden sm:table-cell capitalize">
                       {book.category}
                     </td>
