@@ -316,7 +316,24 @@ export default function BookList() {
                     </td>
                     <td className="px-4 py-3 font-body text-foreground hidden sm:table-cell">{book.author}</td>
                     <td className="px-4 py-3">
-                      <StatusBadge status={book.status} />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setStatusFilter((curr) =>
+                            curr === book.status ? "all" : (book.status as StatusFilter),
+                          );
+                        }}
+                        title={
+                          statusFilter === book.status
+                            ? "Clear status filter"
+                            : `Filter by ${statusLabels[book.status]}`
+                        }
+                        className="rounded-full focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1 hover:opacity-80 transition-opacity"
+                      >
+                        <StatusBadge status={book.status} />
+                      </button>
+                    </td>
                     </td>
                     <td className="px-4 py-3 font-body text-sm text-muted-foreground hidden sm:table-cell capitalize">
                       {book.category}
