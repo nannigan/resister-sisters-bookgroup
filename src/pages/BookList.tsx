@@ -49,8 +49,15 @@ export default function BookList() {
   const { books, loading } = useBooks();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
-  const [sortKey, setSortKey] = useState<SortKey>("created_at");
-  const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [sortKey, setSortKey] = useState<SortKey>("status");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
+
+  const statusOrder: Record<string, number> = {
+    current: 0,
+    candidate: 1,
+    previously_suggested: 2,
+    finished: 3,
+  };
 
   const toggleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -82,7 +89,7 @@ export default function BookList() {
           break;
         }
         case "status":
-          cmp = a.status.localeCompare(b.status);
+          cmp = (statusOrder[a.status] ?? 99) - (statusOrder[b.status] ?? 99);
           break;
         case "nominator":
           cmp = (a.nominator || "").localeCompare(b.nominator || "");
