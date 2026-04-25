@@ -103,6 +103,12 @@ export default function BookList() {
       }
       return cmp * dir;
     });
+    // Always pin "Currently Reading" to the top, regardless of sort
+    result.sort((a, b) => {
+      if (a.status === "current" && b.status !== "current") return -1;
+      if (b.status === "current" && a.status !== "current") return 1;
+      return 0;
+    });
     return result;
   }, [books, statusFilter, categoryFilter, sortKey, sortDir]);
 
