@@ -218,6 +218,10 @@ export default function BookList() {
           </Select>
 
         </div>
+          <span className="ml-auto font-body text-sm text-muted-foreground">
+            {books.length} books
+          </span>
+        </div>
 
         {loading ? (
           <div className="space-y-3">
