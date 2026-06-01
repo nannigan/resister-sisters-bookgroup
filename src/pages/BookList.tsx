@@ -217,7 +217,6 @@ export default function BookList() {
             </SelectContent>
           </Select>
 
-        </div>
           <span className="ml-auto font-body text-sm text-muted-foreground">
             {books.length} books
           </span>
