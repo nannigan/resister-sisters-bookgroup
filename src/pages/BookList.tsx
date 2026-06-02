@@ -218,7 +218,7 @@ export default function BookList() {
           </Select>
 
           <span className="ml-auto font-body text-sm text-muted-foreground">
-            {books.length} books
+            {books.filter((b) => b.status === "finished").length} books read
           </span>
         </div>
 
