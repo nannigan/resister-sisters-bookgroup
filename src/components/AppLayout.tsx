@@ -38,7 +38,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="container px-4">
           <div className="flex items-center justify-between h-14">
             <Link to="/books" className="flex items-center gap-2 group min-w-0">
-              <BookOpen className="h-5 w-5 text-primary transition-transform group-hover:rotate-[-8deg] shadow-none shrink-0" />
+              <img
+                src="/favicon.svg"
+                alt=""
+                aria-hidden="true"
+                className="h-6 w-6 shrink-0 transition-transform group-hover:rotate-[-8deg]"
+              />
               <span className="font-display text-lg font-bold text-foreground truncate">
                 <span className="sm:hidden">Resister Sisters</span>
                 <span className="hidden sm:inline">Resister Sisters Book Group</span>
