@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBooks, Book } from "@/hooks/useBooks";
+import { useMembers } from "@/hooks/useMembers";
+import { usePlanningSettings } from "@/hooks/usePlanningSettings";
 import AppLayout from "@/components/AppLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -47,6 +49,9 @@ function SortIcon({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKey
 export default function BookList() {
   const navigate = useNavigate();
   const { books, loading } = useBooks();
+  const { settings: planning } = usePlanningSettings();
+  const { members } = useMembers();
+  const nextBookPicker = members.find((member) => member.id === planning?.next_book_picker_member_id);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [sortKey, setSortKey] = useState<SortKey>("status");
@@ -149,8 +154,20 @@ export default function BookList() {
         })()}
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
-          <div className="flex gap-2">
+          <div className="min-w-0 space-y-2">
+            <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
+            {(planning?.next_meeting_date || nextBookPicker) && (
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1 sm:gap-x-6 font-body text-sm text-foreground" aria-label="Meeting planning">
+                {planning?.next_meeting_date && (
+                  <p><span className="font-semibold">Next meeting:</span>{" "}{format(new Date(`${planning.next_meeting_date}T00:00:00`), "MMM d, yyyy")}</p>
+                )}
+                {nextBookPicker && (
+                  <p className="break-words"><span className="font-semibold">Next book picker:</span>{" "}{nextBookPicker.name}</p>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
             <Button
               variant="outline"
               onClick={() => {
