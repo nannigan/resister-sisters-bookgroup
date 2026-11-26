@@ -149,6 +149,9 @@
     @apply bg-amber-50 border-amber-200;
     color: #3693ab !important;
   }
+  .planning-details-text {
+    color: #3693ab;
+  }
   .status-badge-current {
     @apply border-amber-200;
     background-color: #617b56 !important;

@@ -157,7 +157,7 @@ export default function BookList() {
           <div className="min-w-0 space-y-2">
             <h1 className="font-display text-2xl font-bold text-foreground">Resister Sisters Books</h1>
             {(planning?.next_meeting_date || nextBookPicker) && (
-              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1 sm:gap-x-6 font-body text-sm text-foreground" aria-label="Meeting planning">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1 sm:gap-x-6 font-body text-sm planning-details-text" aria-label="Meeting planning">
                 {planning?.next_meeting_date && (
                   <p><span className="font-semibold">Next meeting:</span>{" "}{format(new Date(`${planning.next_meeting_date}T00:00:00`), "MMM d, yyyy")}</p>
                 )}
