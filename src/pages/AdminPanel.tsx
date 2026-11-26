@@ -3,6 +3,7 @@ import { useVotes } from "@/hooks/useVotes";
 import { useMembers } from "@/hooks/useMembers";
 import AppLayout from "@/components/AppLayout";
 import ThemeConfigurator from "@/components/ThemeConfigurator";
+import PlanningSettings from "@/components/PlanningSettings";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -22,7 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function AdminPanel() {
   const { votes, clearAllVotes } = useVotes();
-  const { members, adminMember } = useMembers();
+  const { members, adminMember, loading: membersLoading } = useMembers();
   const [clearing, setClearing] = useState(false);
   const [recipientMode, setRecipientMode] = useState<"bcc" | "cc">("bcc");
 
@@ -47,6 +48,8 @@ export default function AdminPanel() {
         <h1 className="font-display text-2xl font-bold text-foreground">
           Admin Panel
         </h1>
+
+        <PlanningSettings members={members} membersLoading={membersLoading} />
 
         <div className="rounded-lg border border-border bg-card p-6 space-y-5">
           <div className="space-y-3">

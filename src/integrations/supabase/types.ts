@@ -19,6 +19,8 @@ export type Database = {
           access_token: string
           created_at: string
           id: string
+          next_book_picker_member_id: string | null
+          next_meeting_date: string | null
           theme_accent: string
           theme_background: string
           theme_border_radius: string
@@ -33,6 +35,8 @@ export type Database = {
           access_token: string
           created_at?: string
           id?: string
+          next_book_picker_member_id?: string | null
+          next_meeting_date?: string | null
           theme_accent?: string
           theme_background?: string
           theme_border_radius?: string
@@ -47,6 +51,8 @@ export type Database = {
           access_token?: string
           created_at?: string
           id?: string
+          next_book_picker_member_id?: string | null
+          next_meeting_date?: string | null
           theme_accent?: string
           theme_background?: string
           theme_border_radius?: string
@@ -57,7 +63,15 @@ export type Database = {
           theme_primary?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "app_settings_next_book_picker_member_id_fkey"
+            columns: ["next_book_picker_member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       books: {
         Row: {
